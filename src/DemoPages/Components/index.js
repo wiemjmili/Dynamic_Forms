@@ -7,9 +7,9 @@ import { Route } from "react-router-dom";
 
 import TabExample from "./Tabs/";
 
-// Workflow
+// List of Usertasks
 
-import WorkflowExamples from "./Workflow/";
+import Assign_Tasks from "./Workflow/";
 
 // Tooltips & Popovers
 
@@ -52,7 +52,7 @@ const Components = ({ match }) => (
 
 					{/* Workflow */}
 
-					<Route path={`${match.url}/workflow`} component={WorkflowExamples} />
+					<Route path={`${match.url}/workflow`} component={Assign_Tasks} />
 
 					{/* Tooltips & Popovers */}
 

@@ -36,34 +36,16 @@ export default class TitleComponent2 extends Component {
 					</DropdownToggle>
 					<DropdownMenu right>
 						<Nav vertical>
-							<NavItem>
-								<NavLink href="javascript:void(0);">
-									<i className="nav-link-icon lnr-inbox"> </i>
-									<span>Inbox</span>
-									<div className="ml-auto badge badge-pill badge-secondary">
-										86
-									</div>
-								</NavLink>
-							</NavItem>
+						
 							<NavItem>
 								<NavLink href="javascript:void(0);">
 									<i className="nav-link-icon lnr-book"> </i>
-									<span>Book</span>
+									<span>Notifications</span>
 									<div className="ml-auto badge badge-pill badge-danger">5</div>
 								</NavLink>
 							</NavItem>
-							<NavItem>
-								<NavLink href="javascript:void(0);">
-									<i className="nav-link-icon lnr-picture"> </i>
-									<span>Picture</span>
-								</NavLink>
-							</NavItem>
-							<NavItem>
-								<NavLink disabled href="javascript:void(0);">
-									<i className="nav-link-icon lnr-file-empty"> </i>
-									<span>File Disabled</span>
-								</NavLink>
-							</NavItem>
+					
+							
 						</Nav>
 					</DropdownMenu>
 				</UncontrolledDropdown>

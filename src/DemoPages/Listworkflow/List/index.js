@@ -4,8 +4,8 @@ import Tabs from "react-responsive-tabs";
 
 import PageTitle from "../../../Layout/AppMain/PageTitle";
 
-import ListWF from "./Examples/ListWF";
-import showWF from "./Examples/showWF";
+import ListWF from "./BPMN/ListWF";
+import NewWF from "./BPMN/New_WF";
 
 const tabsContent = [
 	{
@@ -14,7 +14,7 @@ const tabsContent = [
 	},
 	{
 		title: "New Workflow",
-		content: <showWF />
+		content: <NewWF />
 	}
 ];
 
@@ -30,11 +30,7 @@ export default class WFExamples extends Component {
 	render() {
 		return (
 			<Fragment>
-				<PageTitle
-					heading="List Of Workflow"
-					subheading=""
-					icon="pe-7s-menu icon-gradient bg-love-kiss"
-				/>
+				<PageTitle heading="List Of Workflow" subheading="" icon="lnr-list " />
 				<Tabs
 					tabsWrapperClass="body-tabs body-tabs-layout"
 					transform={false}

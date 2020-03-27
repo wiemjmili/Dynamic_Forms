@@ -28,16 +28,13 @@ class UserBox extends React.Component {
 	}
 
 	notify2 = () =>
-		(this.toastId = toast(
-			"You don't have any new items in your calendar for today! Go out and play!",
-			{
-				transition: Bounce,
-				closeButton: true,
-				autoClose: 5000,
-				position: "bottom-center",
-				type: "success"
-			}
-		));
+		(this.toastId = toast("Toast", {
+			transition: Bounce,
+			closeButton: true,
+			autoClose: 5000,
+			position: "bottom-center",
+			type: "success"
+		}));
 
 	render() {
 		return (
@@ -111,7 +108,7 @@ class UserBox extends React.Component {
 									<FontAwesomeIcon className="mr-2 ml-2" icon={faCalendarAlt} />
 								</Button>
 								<UncontrolledTooltip placement="bottom" target={"Tooltip-1"}>
-									Click for Toastify Notifications!
+									Notifications!
 								</UncontrolledTooltip>
 							</div>
 						</div>

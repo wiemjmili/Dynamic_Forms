@@ -1,10 +1,3 @@
-export const MainNav = [
-	{
-		icon: "pe-7s-rocket",
-		label: "Dashboard Example",
-		to: "#/dashboards/basic"
-	}
-];
 export const ComponentsNav = [
 	{
 		icon: "pe-7s-diamond",
@@ -124,12 +117,8 @@ export const Forms = [
 		content: [
 			{
 				icon: "lnr-list",
-				label: "Manage Forms",
-				to: "#/components/notifications"
-			},
-			{
-				label: "Drag&Drop",
-				to: "#/components/notifications"
+				label: "Drag&Drop Forms",
+				to: "#/components/modals"
 			}
 		]
 	}
@@ -149,12 +138,5 @@ export const FormsNav = [
 		icon: "pe-7s-pendrive",
 		label: "Validation",
 		to: "#/forms/validation"
-	}
-];
-export const WidgetsNav = [
-	{
-		icon: "pe-7s-graph2",
-		label: "Dashboard Boxes",
-		to: "#/widgets/dashboard-boxes"
 	}
 ];
