@@ -5,6 +5,10 @@ module.exports = {
 	all_WF: function () {
 		return "http://localhost:8080/api/workflow/findAllWF";
 	},
+	//add_workflow
+	add_WF: function () {
+		return "/api/workflow/addWF";
+	},
 
 	//UserTask
 

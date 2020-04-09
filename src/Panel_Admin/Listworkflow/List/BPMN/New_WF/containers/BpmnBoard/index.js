@@ -72,7 +72,8 @@ export default class BpmnBoard extends Component {
 
 	handleSave = (e) => {
 		this.bpmnModeler.saveXML({ format: true }, (err, xml) => {
-			fetch("/addWF", {
+			const add_WF = base_url.add_WF();
+			fetch(add_WF, {
 				method: "post",
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify({
