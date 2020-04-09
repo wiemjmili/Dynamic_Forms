@@ -2,7 +2,7 @@ import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import cx from "classnames";
 
-import Nav from "../AppNav/VerticalNavWrapper";
+import Nav from "../AppNav/UserVerticalNav";
 
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 
@@ -11,7 +11,7 @@ import HeaderLogo from "../AppLogo";
 
 import { setEnableMobileMenu } from "../../reducers/ThemeOptions";
 
-class AppSidebar extends Component {
+class UserSidebar extends Component {
 	state = {};
 
 	toggleMobileSidebar = () => {
@@ -78,4 +78,4 @@ const mapDispatchToProps = (dispatch) => ({
 	setEnableMobileMenu: (enable) => dispatch(setEnableMobileMenu(enable)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(AppSidebar);
+export default connect(mapStateToProps, mapDispatchToProps)(UserSidebar);

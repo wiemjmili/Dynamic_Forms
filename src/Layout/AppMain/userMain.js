@@ -3,12 +3,32 @@ import React, { Suspense, lazy, Fragment } from "react";
 
 import { ToastContainer } from "react-toastify";
 
-const Components = lazy(() => import("../../Panel_Admin/Components"));
-const Listworkflow = lazy(() => import("../../Panel_Admin/Listworkflow"));
+const Elements = lazy(() => import("../../Panel_User/Elements"));
+const Components = lazy(() => import("../../Panel_User/Components"));
+const Forms = lazy(() => import("../../Panel_User/Forms"));
 
-const AppMain = () => {
+const UserMain = () => {
 	return (
 		<Fragment>
+			{/* Elements */}
+
+			<Suspense
+				fallback={
+					<div className="loader-container">
+						<div className="loader-container-inner">
+							<h6 className="mt-3">
+								Please wait while we load all the Elements examples
+								<small>
+									Because this is a demonstration we load at once all the
+									Elements examples. This wouldn't happen in a real live app!
+								</small>
+							</h6>
+						</div>
+					</div>
+				}
+			>
+				<Route path="/elements" component={Elements} />
+			</Suspense>
 			{/* Components */}
 
 			<Suspense
@@ -28,17 +48,14 @@ const AppMain = () => {
 			>
 				<Route path="/components" component={Components} />
 			</Suspense>
-
-			{/* ListWorkflow */}
-
 			<Suspense
 				fallback={
 					<div className="loader-container">
 						<div className="loader-container-inner">
-							<h6 className="mt-3">
-								Please wait while we load all the Charts examples
+							<h6 className="mt-5">
+								Please wait while we load all the Forms examples
 								<small>
-									Because this is a demonstration we load at once all the Charts
+									Because this is a demonstration we load at once all the Forms
 									examples. This wouldn't happen in a real live app!
 								</small>
 							</h6>
@@ -46,13 +63,13 @@ const AppMain = () => {
 					</div>
 				}
 			>
-				<Route path="/listWF" component={Listworkflow} />
+				<Route path="/forms" component={Forms} />
 			</Suspense>
 
-			<Route exact path="/" render={() => <Redirect to="/listWF/list" />} />
+			<Route exact path="/" render={() => <Redirect to="/elements" />} />
 			<ToastContainer />
 		</Fragment>
 	);
 };
 
-export default AppMain;
+export default UserMain;
