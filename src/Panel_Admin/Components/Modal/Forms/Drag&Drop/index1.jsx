@@ -5,11 +5,12 @@ import Preview from "./preview";
 import Toolbar from "./toolbar";
 import ReactFormGenerator from "./form";
 import store from "../../Forms/stores/store";
-import { Table, Button } from "reactstrap";
 import Modals from "./index.js";
 import * as variables from "./variables";
-import { Row, Col, Card, CardBody, CardTitle } from "reactstrap";
+import { Row, Col, Card, CardBody } from "reactstrap";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
+import base_url from "../../../../../../src/service/base_url";
+import axios from "axios";
 
 class ReactFormBuilder extends React.Component {
 	constructor(props) {
@@ -17,8 +18,18 @@ class ReactFormBuilder extends React.Component {
 
 		this.state = {
 			editMode: false,
-			editElement: null
+			editElement: null,
+			Forms: [],
+			data: "",
 		};
+	}
+	componentDidMount() {
+		let url = base_url.getAllForms();
+		axios.get(url).then((res) => {
+			const Forms = res.data;
+			this.setState({ Forms });
+			this.setState({ data: this.state.Forms[0].data[0] });
+		});
 	}
 
 	editModeOn(data, e) {
@@ -35,7 +46,7 @@ class ReactFormBuilder extends React.Component {
 		if (this.state.editMode) {
 			this.setState({
 				editMode: false,
-				editElement: null
+				editElement: null,
 			});
 		}
 	}
@@ -69,10 +80,6 @@ class ReactFormBuilder extends React.Component {
 													showCorrectColumn={this.props.showCorrectColumn}
 													parent={this}
 													data={this.props.data}
-													url={this.props.url}
-													saveUrl={this.props.saveUrl}
-													onLoad={this.props.onLoad}
-													onPost={this.props.onPost}
 													editModeOn={this.editModeOn}
 													editMode={this.state.editMode}
 													variables={this.props.variables}

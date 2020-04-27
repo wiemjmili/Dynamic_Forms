@@ -5,6 +5,8 @@ import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 import { toast, Bounce } from "react-toastify";
 import { Row, Col, Card, CardBody, Button } from "reactstrap";
 import base_url from "../../../../../../src/service/base_url";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 
 const answers = {};
@@ -13,29 +15,34 @@ export default class Modals extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			data: "",
+			data: [],
 			nameWF: "",
+			Forms: "",
 			nameUT: "",
 			idUT: "",
 			UserTasks: [],
 			Workflow: [],
 			previewVisible: false,
-			shortPreviewVisible: false,
 			roPreviewVisible: false,
 		};
-
 		const update = this._onChange.bind(this);
 		this._onSubmit = this._onSubmit.bind(this);
-
 		store.subscribe((state) => update(state.data));
 	}
 	componentDidMount() {
+		let url = base_url.getAllForms();
+		axios.get(url).then((res) => {
+			const Forms = res.data;
+			this.setState({ Forms });
+		});
+
 		axios.get(base_url.all_WF()).then((res) => {
 			const Workflow = res.data;
 			this.setState({ Workflow });
 		});
 	}
 	handleChange = (event) => {
+		console.log(this.state.data);
 		event.preventDefault();
 		this.setState({ nameWF: event.target.value });
 	};
@@ -55,22 +62,12 @@ export default class Modals extends React.Component {
 	};
 
 	showPreview() {
-		this.toastId = toast(
-			"Form successfully added for " + "'" + this.state.nameUT + "'",
-			{
-				transition: Bounce,
-				closeButton: true,
-				autoClose: 5000,
-				position: "bottom-center",
-				type: "success",
-			}
-		);
-		this.setState({
-			previewVisible: true,
-		});
-
 		let get_UT =
-			base_url.find_UserTask() + "/" + this.state.nameUT + this.state.nameWF;
+			base_url.find_UserTask() +
+			"/" +
+			this.state.nameUT +
+			"/" +
+			this.state.nameWF;
 		let add_Form = base_url.add_Form();
 
 		axios.get(get_UT).then((res) => {
@@ -85,11 +82,18 @@ export default class Modals extends React.Component {
 				console.log({ d });
 			});
 		});
-	}
-
-	showShortPreview() {
+		this.toastId = toast(
+			"Form successfully added for " + "'" + this.state.nameUT + "'",
+			{
+				transition: Bounce,
+				closeButton: true,
+				autoClose: 5000,
+				position: "bottom-center",
+				type: "success",
+			}
+		);
 		this.setState({
-			shortPreviewVisible: true,
+			previewVisible: true,
 		});
 	}
 
@@ -134,10 +138,10 @@ export default class Modals extends React.Component {
 									<Row>
 										<Col md="2">
 											<div className="card-header-title fsize-2 text-capitalize font-weight-normal">
-												Select workflow :
+												Workflow
 											</div>
 										</Col>
-										<Col md="3">
+										<Col md="2">
 											<select
 												onChange={this.handleChange}
 												className="browser-default custom-select"
@@ -153,15 +157,16 @@ export default class Modals extends React.Component {
 												<Button
 													className="btn-wide mb-1 mr-1"
 													size="lg"
-													color="secondary"
+													color="warning"
+													outline
 												>
-													>>
+													<FontAwesomeIcon icon={faAngleRight} size="1x" />
 												</Button>
 											</form>
 										</Col>
 										<Col md="2">
 											<div className="card-header-title fsize-2 text-capitalize font-weight-normal">
-												Select usertask :
+												Usertask
 											</div>
 										</Col>
 										<Col md="2">
@@ -179,10 +184,21 @@ export default class Modals extends React.Component {
 											<Button
 												className="btn-wide mb-1 mr-1"
 												size="lg"
-												color="secondary"
+												color="warning"
 												onClick={this.showPreview.bind(this)}
 											>
 												Save Form
+											</Button>
+										</Col>
+										<Col md="1">
+											<Button
+												className="btn-wide mb-1 mr-1"
+												size="lg"
+												outline
+												color="warning"
+												onClick={this.showPreview.bind(this)}
+											>
+												Show Form
 											</Button>
 										</Col>
 									</Row>

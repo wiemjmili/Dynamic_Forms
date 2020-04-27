@@ -1,16 +1,25 @@
-/**
- * <Form />
- */
-
 import React from "react";
 import ReactDOM from "react-dom";
 import { EventEmitter } from "fbemitter";
 import FormValidator from "./form-validator";
 import FormElements from "./form-elements";
+import base_url from "../../../../../../src/service/base_url";
 
 const { Image, Checkboxes, Signature, Download, Camera } = FormElements;
 
 export default class ReactForm extends React.Component {
+	state = {
+		data: "",
+		Forms: "",
+	};
+
+	componentDidMount() {
+		let url = base_url.getAllForms;
+		axios.get(url).then((res) => {
+			const Forms = res.data;
+			this.setState({ Forms });
+		});
+	}
 	form;
 
 	inputs = {};
@@ -60,7 +69,7 @@ export default class ReactForm extends React.Component {
 	_getItemValue(item, ref) {
 		let $item = {
 			element: item.element,
-			value: ""
+			value: "",
 		};
 		if (item.element === "Rating") {
 			$item.value = ref.inputField.current.state.rating;
@@ -362,7 +371,7 @@ export default class ReactForm extends React.Component {
 		const backName = this.props.back_name ? this.props.back_name : "Cancel";
 
 		const formTokenStyle = {
-			display: "none"
+			display: "none",
 		};
 
 		return (

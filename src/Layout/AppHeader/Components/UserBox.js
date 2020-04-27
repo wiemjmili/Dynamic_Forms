@@ -1,8 +1,8 @@
 import React, { Fragment } from "react";
-
 import {
 	DropdownToggle,
 	DropdownMenu,
+	DropdownItem,
 	Nav,
 	Button,
 	NavItem,
@@ -36,6 +36,10 @@ class UserBox extends React.Component {
 			type: "success"
 		}));
 
+	signOut = () =>
+		this.props.history.push('/');
+
+
 	render() {
 		return (
 			<Fragment>
@@ -58,35 +62,11 @@ class UserBox extends React.Component {
 									</DropdownToggle>
 									<DropdownMenu right className="rm-pointers dropdown-menu-lg">
 										<Nav vertical>
-											<NavItem className="nav-item-header">Activity</NavItem>
 											<NavItem>
 												<NavLink href="javascript:void(0);">
-													Chat
-													<div className="ml-auto badge badge-pill badge-info">
-														8
-													</div>
+													<DropdownItem header tag="div" className="text-center"><strong>My Account</strong></DropdownItem>
+													<DropdownItem onClick={this.signOut}><i className="fa fa-lock"></i> Logout</DropdownItem>
 												</NavLink>
-											</NavItem>
-											<NavItem>
-												<NavLink href="javascript:void(0);">
-													Recover Password
-												</NavLink>
-											</NavItem>
-											<NavItem className="nav-item-header">My Account</NavItem>
-											<NavItem>
-												<NavLink href="javascript:void(0);">
-													Settings
-													<div className="ml-auto badge badge-success">New</div>
-												</NavLink>
-											</NavItem>
-											<NavItem>
-												<NavLink href="javascript:void(0);">
-													Messages
-													<div className="ml-auto badge badge-warning">512</div>
-												</NavLink>
-											</NavItem>
-											<NavItem>
-												<NavLink href="javascript:void(0);">Logs</NavLink>
 											</NavItem>
 										</Nav>
 									</DropdownMenu>
@@ -114,7 +94,7 @@ class UserBox extends React.Component {
 						</div>
 					</div>
 				</div>
-			</Fragment>
+			</Fragment >
 		);
 	}
 }

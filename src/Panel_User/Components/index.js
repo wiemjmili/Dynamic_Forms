@@ -1,23 +1,17 @@
 import React, { Fragment } from "react";
 import { Route } from "react-router-dom";
 
-// COMPONENTS
+// List_Process
 
-// Tabs
+import List_Process from "./List_Process/";
 
-import TabExample from "./Tabs/";
+// Historical_Process
 
-// Tooltips & Popovers
+import Historical_Process from "./Historical_Process/";
 
-import TooltipsPopoversExample from "./TooltipsPopovers/";
+// Validate_Process
 
-// Progress Bar
-
-import ProgressBarsExamples from "./ProgressBar/";
-
-// Maps
-
-import MapsExample from "./Maps/";
+import Validate_Process from "./Validate_Process/";
 
 // Layout
 
@@ -34,27 +28,23 @@ const Components = ({ match }) => (
 				<div className="app-main__inner">
 					{/* Components */}
 
-					{/* Tabs */}
+					{/* List_Process */}
 
-					<Route path={`${match.url}/tabs`} component={TabExample} />
+					<Route path={`${match.url}/list_Process`} component={List_Process} />
 
-					{/* Tooltips & Popovers */}
-
-					<Route
-						path={`${match.url}/tooltips-popovers`}
-						component={TooltipsPopoversExample}
-					/>
-
-					{/* Progress Bar */}
+					{/* Historical_Process */}
 
 					<Route
-						path={`${match.url}/progress-bar`}
-						component={ProgressBarsExamples}
+						path={`${match.url}/historical_Process`}
+						component={Historical_Process}
 					/>
 
-					{/* Maps */}
+					{/* Validate_Process */}
 
-					<Route path={`${match.url}/maps`} component={MapsExample} />
+					<Route
+						path={`${match.url}/validate_Process`}
+						component={Validate_Process}
+					/>
 				</div>
 				<AppFooter />
 			</div>

@@ -1,17 +1,25 @@
 import React, { Fragment } from "react";
 import { Route } from "react-router-dom";
 
+// List_of_worflow
+
+import List_Workflow from "./Listworkflow/List";
+
 // List of Usertasks
 
 import Assign_Tasks from "./Workflow/";
 
-// Modals
+// Drag & Drop Formms
 
 import Drag_Drop from "./Modal/";
 
-// Forms
+// Show Forms
 
-import Forms_WF from "./Forms/";
+import Show_Forms from "./Forms/";
+
+//New Workflow
+
+import NewWF from "./New_WF";
 
 // Layout
 
@@ -26,22 +34,29 @@ const Components = ({ match }) => (
 			<AppSidebar />
 			<div className="app-main__outer">
 				<div className="app-main__inner">
+					{/* List_Workflow */}
+
+					<Route path={`${match.url}/list_WF`} component={List_Workflow} />
+
+					{/* new_Workflow */}
+
+					<Route path={`${match.url}/new_WF`} component={NewWF} />
+
 					{/* Workflow */}
 
 					<Route path={`${match.url}/workflow`} component={Assign_Tasks} />
 
-					{/* Forms */}
-
-					<Route path={`${match.url}/Forms`} component={Forms_WF} />
-
 					{/* Modals */}
 
-					<Route path={`${match.url}/modals`} component={Drag_Drop} />
+					<Route path={`${match.url}/Forms`} component={Drag_Drop} />
+
+					{/* Forms */}
+
+					<Route path={`${match.url}/show_Forms`} component={Show_Forms} />
 				</div>
 				<AppFooter />
 			</div>
 		</div>
 	</Fragment>
 );
-
 export default Components;

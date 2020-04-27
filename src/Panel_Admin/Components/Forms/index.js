@@ -1,9 +1,8 @@
 import React, { Fragment } from "react";
-
 import PageTitle from "../../../Layout/AppMain/PageTitle";
 import Forms from "./ShowForms/forms";
 
-export default class CarouselExample extends React.Component {
+export default class Show_Forms extends React.Component {
 	render() {
 		return (
 			<Fragment>

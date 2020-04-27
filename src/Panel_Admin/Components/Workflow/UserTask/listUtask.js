@@ -5,12 +5,14 @@ import base_url from "../../../../../src/service/base_url";
 import { toast, Bounce } from "react-toastify";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 import { Row, Col, Card, CardBody } from "reactstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 
 export default class ListUT extends React.Component {
 	state = {
 		userTasks: [],
 		groups: [],
-		group: "",
+		tab: [],
 		name: "",
 		nameWF: "",
 		workflow: [],
@@ -28,11 +30,11 @@ export default class ListUT extends React.Component {
 		});
 	}
 
-	handleChange = (event) => {
+	handleChangeWF = (event) => {
 		this.setState({ nameWF: event.target.value });
 	};
 
-	handleSubmit = (event) => {
+	getUT_GP = (event) => {
 		event.preventDefault();
 		const nameWF = this.state.nameWF;
 		let url = base_url.all_UserTasks() + "/" + nameWF;
@@ -42,18 +44,34 @@ export default class ListUT extends React.Component {
 		});
 	};
 
-	handleChange1 = (event) => {
+	handleChangeUT = (event) => {
 		this.setState({ name: event.target.value });
 	};
-
-	handleChange2 = (event) => {
-		this.setState({ group: event.target.value });
+	handleChangeGp = (event) => {
+		let value = Array.from(
+			event.target.selectedOptions,
+			(option) => option.value
+		);
+		this.setState({ gp: value });
 	};
 
-	handleSubmit2 = (event) => {
+	affectGroup = (event) => {
 		event.preventDefault();
-		console.log(this.state.name);
-		console.log(this.state.group);
+		let n1 = this.state.gp.length;
+		let n2 = this.state.groups.length;
+
+		for (let i = 0; i < n1; i++) {
+			let find = false;
+			let j = 0;
+			while (find == false && j < n2) {
+				if (this.state.gp[i] == this.state.groups[j].name_GP) {
+					this.state.tab.push(this.state.groups[j]);
+					find = true;
+				} else {
+					j++;
+				}
+			}
+		}
 		const nameWF = this.state.nameWF;
 		let get_UT = base_url.all_UserTasks() + "/" + nameWF;
 		let update_UT = base_url.update_UT();
@@ -62,12 +80,8 @@ export default class ListUT extends React.Component {
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify({
 				name: this.state.name,
-				groupN: this.state.group,
+				group: this.state.tab,
 			}),
-		});
-		axios.get(get_UT).then((res) => {
-			const userTasks = res.data;
-			this.setState({ userTasks });
 		});
 		this.toastId = toast(
 			"Candidate group successfully added for user task " +
@@ -82,10 +96,11 @@ export default class ListUT extends React.Component {
 				type: "success",
 			}
 		);
+		window.location.reload(false);
 	};
 
 	render() {
-		const { name, group, nameWF } = this.state;
+		const { name, nameWF } = this.state;
 		return (
 			<Fragment>
 				<ReactCSSTransitionGroup
@@ -109,7 +124,7 @@ export default class ListUT extends React.Component {
 										<Col lg="4">
 											<select
 												required
-												onChange={this.handleChange}
+												onChange={this.handleChangeWF}
 												className="browser-default custom-select"
 											>
 												<option selected value="" value={nameWF}></option>
@@ -119,14 +134,13 @@ export default class ListUT extends React.Component {
 											</select>
 										</Col>
 										<Col lg="2">
-											{" "}
-											<form onSubmit={this.handleSubmit}>
+											<form onSubmit={this.getUT_GP}>
 												<Button
 													className="btn-wide mb-1 mr-1"
 													size="lg"
 													color="secondary"
 												>
-													>>
+													<FontAwesomeIcon icon={faAngleRight} size="1x" />
 												</Button>
 											</form>
 										</Col>
@@ -153,7 +167,7 @@ export default class ListUT extends React.Component {
 										<Col lg="5">
 											<select
 												required
-												onChange={this.handleChange1}
+												onChange={this.handleChangeUT}
 												className="browser-default custom-select"
 											>
 												<option selected value="" value={name}></option>
@@ -164,18 +178,24 @@ export default class ListUT extends React.Component {
 										</Col>
 										<Col lg="5">
 											<select
+												multiple={true}
 												required
-												onChange={this.handleChange2}
+												onChange={this.handleChangeGp}
 												className="browser-default custom-select"
 											>
-												<option selected value="" value={group}></option>
 												{this.state.groups.map((group) => (
-													<option name="group">{group.name_GP}</option>
+													<option
+														name="group"
+														selectedOptions
+														value={group.name_GP}
+													>
+														{group.name_GP}
+													</option>
 												))}
 											</select>
 										</Col>
 										<Col lg="2">
-											<form onSubmit={this.handleSubmit2}>
+											<form onSubmit={this.affectGroup}>
 												<Button
 													className="btn-wide mb-1 mr-1"
 													size="lg"
@@ -203,7 +223,11 @@ export default class ListUT extends React.Component {
 														<td>{usertask.name}</td>
 													)}
 													{usertask.group.length != 0 && (
-														<td>{usertask.group[0].name_GP}</td>
+														<td>
+															{usertask.group.map((gp) => (
+																<div>{gp.name_GP}</div>
+															))}
+														</td>
 													)}
 												</tr>
 											))}

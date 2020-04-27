@@ -21,27 +21,33 @@ export const workflow = [
 		label: "Workflow",
 		content: [
 			{
-				icon: "lnr-list",
+				icon: "pe-7s-network",
 				label: "List of workflow",
-				to: "#/listWF/list",
+				to: "#/components/list_WF",
 			},
 			{
+				icon: "pe-7s-network",
+				label: "New Workflow",
+				to: "#/components/new_WF",
+			},
+
+			{
+				icon: "lnr-list",
 				label: "Assign tasks",
 				to: "#/components/workflow",
 			},
 		],
 	},
 ];
-
 export const Forms = [
 	{
 		icon: "pe-7s-back-2",
 		label: "Manage forms",
-		to: "#/components/modals",
+		to: "#/components/Forms",
 	},
 	{
 		icon: "pe-7s-id",
 		label: "Show forms",
-		to: "#/components/Forms",
+		to: "#/components/show_Forms",
 	},
 ];

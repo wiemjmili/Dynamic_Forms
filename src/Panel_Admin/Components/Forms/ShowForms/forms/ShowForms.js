@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import base_url from "../../../../../service/base_url";
 import { Table, Button } from "reactstrap";
 import { CustomInput, FormGroup, Label, Input, Col } from "reactstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 
 class Show_Forms extends Component {
@@ -18,6 +20,7 @@ class Show_Forms extends Component {
 		});
 	}
 	handleChange = (event) => {
+		this.setState({ Forms: [] });
 		this.setState({ nameWF: event.target.value });
 	};
 
@@ -64,7 +67,7 @@ class Show_Forms extends Component {
 										size="lg"
 										color="secondary"
 									>
-										>>
+										<FontAwesomeIcon icon={faAngleRight} size="1x" />
 									</Button>
 								</form>
 								<div className="mbg-3 h-auto pl-0 pr-0 bg-transparent no-border card-header">
@@ -84,38 +87,48 @@ class Show_Forms extends Component {
 											<div>
 												{d.element == "Header" && (
 													<div>
-														<h2>{d.content}</h2>
+														<center>
+															<h2>{d.content}</h2>
+														</center>
 														<br />
 													</div>
 												)}
 											</div>
-
 											<div>
 												{d.element == "TextInput" && (
-													<div class="form-group">
-														<Label>{d.label}</Label>
-														<Input
-															required={d.required}
-															class="form-control"
-															placeholder={d.label}
-														/>
-													</div>
+													<FormGroup row>
+														<Col sm={3}>
+															<Label>{d.label}</Label>
+														</Col>
+														<Col sm={9}>
+															<Input
+																required={d.required}
+																class="form-control"
+																placeholder={d.label}
+															/>
+														</Col>
+													</FormGroup>
 												)}
 												{d.element == "DatePicker" && (
-													<div class="form-group">
-														<Label>{d.label}</Label>
-														<Input
-															type="date"
-															dateFormat="MM/DD/YYYY"
-															className="form-control"
-															required={d.required}
-														/>
-													</div>
+													<FormGroup row>
+														<Col sm={3}>
+															<Label>{d.label}</Label>
+														</Col>
+														<Col sm={9}>
+															<Input
+																type="date"
+																className="form-control"
+																required={d.required}
+															/>
+														</Col>
+													</FormGroup>
 												)}
 												{d.element == "Checkboxes" && (
-													<div class="form-group">
-														<Label>{d.label}</Label>
-														<div>
+													<FormGroup row>
+														<Col sm={3}>
+															<Label>{d.label}</Label>
+														</Col>
+														<Col sm={9}>
 															{d.options.map((ch) => (
 																<CustomInput
 																	type="checkbox"
@@ -124,13 +137,15 @@ class Show_Forms extends Component {
 																	required={d.required}
 																/>
 															))}
-														</div>
-													</div>
+														</Col>
+													</FormGroup>
 												)}
 												{d.element == "RadioButtons" && (
-													<div class="form-group">
-														<Label>{d.label}</Label>
-														<div>
+													<FormGroup row>
+														<Col sm={3}>
+															<Label>{d.label}</Label>
+														</Col>
+														<Col sm={9}>
 															{d.options.map((radio) => (
 																<CustomInput
 																	type="radio"
@@ -140,175 +155,155 @@ class Show_Forms extends Component {
 																	required={d.required}
 																/>
 															))}
-														</div>
-													</div>
+														</Col>
+													</FormGroup>
 												)}
 												{d.element == "Paragraph" && (
-													<div class="form-group">
-														<Input
-															type="textarea"
-															name="text"
-															value={d.content}
-															id="exampleText"
-															required={d.required}
-														/>
-													</div>
+													<FormGroup row>
+														<Col sm={3}>
+															<Label>{d.content}</Label>
+														</Col>
+
+														<Col sm={9}>
+															<Input
+																type="textarea"
+																name="text"
+																value={d.content}
+																id="exampleText"
+																required={d.required}
+															/>
+														</Col>
+													</FormGroup>
 												)}
 												{d.element == "Download" && (
-													<div class="form-group">
-														<FormGroup row>
-															<Label for="exampleFile" sm={2}>
-																{d.content}
-															</Label>
-															<Col sm={10}>
-																<Input
-																	type="file"
-																	name="file"
-																	id="exampleFile"
-																/>
-															</Col>
-														</FormGroup>
-													</div>
+													<FormGroup row>
+														<Label for="exampleFile" sm={2}>
+															{d.content}
+														</Label>
+														<Col sm={10}>
+															<Input type="file" name="file" id="exampleFile" />
+														</Col>
+													</FormGroup>
 												)}
 												{d.element == "Camera" && (
-													<div class="form-group">
-														<FormGroup row>
-															<Label for="img" sm={2}>
-																Select image
-															</Label>
-															<Col sm={10}>
-																<Input
-																	type="file"
-																	name="file"
-																	id="exampleFile"
-																/>
-															</Col>
-														</FormGroup>
-													</div>
+													<FormGroup row>
+														<Label for="img" sm={2}>
+															Select image
+														</Label>
+														<Col sm={10}>
+															<Input type="file" name="file" id="exampleFile" />
+														</Col>
+													</FormGroup>
 												)}
 												{d.element == "Range" && (
-													<div class="form-group">
-														<FormGroup row>
-															<Label for="exampleFile" sm={2}>
-																{d.label}
-															</Label>
-															<Col sm={10}>
-																<input
-																	type="range"
-																	class="form-control-range"
-																	min={d.min_value}
-																	max={d.max_value}
-																/>
-															</Col>
-														</FormGroup>
-													</div>
+													<FormGroup row>
+														<Label for="exampleFile" sm={2}>
+															{d.label}
+														</Label>
+														<Col sm={10}>
+															<input
+																type="range"
+																class="form-control-range"
+																min={d.min_value}
+																max={d.max_value}
+															/>
+														</Col>
+													</FormGroup>
 												)}
 												{d.element == "HyperLink" && (
-													<div class="form-group">
-														<FormGroup row>
-															<Label for="exampleFile" sm={2}>
-																{d.content}
-															</Label>
-															<Col sm={10}>
-																<Input type="text" placeholder={d.href} />
-															</Col>
-														</FormGroup>
-													</div>
+													<FormGroup row>
+														<Label for="exampleFile" sm={2}>
+															{d.content}
+														</Label>
+														<Col sm={10}>
+															<Input type="text" placeholder={d.href} />
+														</Col>
+													</FormGroup>
 												)}
 												{d.element == "NumberInput" && (
-													<div class="form-group">
-														<FormGroup row>
-															<Label for="exampleFile" sm={2}>
-																{d.label}
-															</Label>
-															<Col sm={10}>
-																<Input
-																	type="number"
-																	placeholder="Number Input"
-																	required={d.required}
-																/>
-															</Col>
-														</FormGroup>
-													</div>
+													<FormGroup row>
+														<Label for="exampleFile" sm={2}>
+															{d.label}
+														</Label>
+														<Col sm={10}>
+															<Input
+																type="number"
+																placeholder="Number Input"
+																required={d.required}
+															/>
+														</Col>
+													</FormGroup>
 												)}
 												{d.element == "Tags" && (
-													<div class="form-group">
-														<FormGroup row>
-															<Label for="exampleCustomSelect" sm={2}>
-																{d.label}
-															</Label>
-															<Col sm={10}>
-																<Input
-																	type="select"
-																	id="exampleCustomSelect"
-																	name="customSelect"
+													<FormGroup row>
+														<Col sm={3}>
+															<Label>{d.label}</Label>
+														</Col>
+														<Col sm={9}>
+															<select
+																required
+																className="browser-default custom-select"
+															>
+																<option
+																	selected
+																	value=""
 																	required={d.required}
-																>
-																	<option value="">Select</option>
-																	{d.options.map((op) => (
-																		<option
-																			type="radio"
-																			id={op.key}
-																			name="customRadio"
-																			label={op.label}
-																		></option>
-																	))}
-																</Input>
-															</Col>
-														</FormGroup>
-													</div>
+																></option>
+																{d.options.map((op) => (
+																	<option
+																		type="radio"
+																		id={op.key}
+																		name="customRadio"
+																		label={op.label}
+																	></option>
+																))}
+															</select>
+														</Col>
+													</FormGroup>
 												)}
 												{d.element == "Label" && (
-													<div class="form-group">
-														<FormGroup row>
-															<Label for="exampleFile" sm={2}>
-																{d.text}
-															</Label>
-														</FormGroup>
-													</div>
+													<FormGroup row>
+														<Label for="exampleFile" sm={2}>
+															{d.text}
+														</Label>
+													</FormGroup>
 												)}
 												{d.element == "LineBreak" && (
-													<div class="form-group">
-														<div className={baseClasses}>
-															<hr />
-														</div>
+													<div className={baseClasses}>
+														<hr />
 													</div>
 												)}
 												{d.element == "TextArea" && (
-													<div class="form-group">
-														<Input
-															type="textarea"
-															name="text"
-															id="exampleText"
-															required={d.required}
-														/>
-													</div>
+													<Input
+														type="textarea"
+														name="text"
+														id="exampleText"
+														required={d.required}
+													/>
 												)}
 												{d.element == "Dropdown" && (
-													<div class="form-group">
-														<FormGroup row>
-															<Label for="exampleCustomSelect" sm={2}>
-																{d.label}
-															</Label>
-															<Col sm={10}>
-																<Input
-																	type="select"
-																	id="exampleCustomSelect"
-																	name="customSelect"
-																	required={d.required}
-																>
-																	{d.options.map((dd) => (
-																		<option
-																			type="radio"
-																			id={dd.key}
-																			name="customRadio"
-																			label={dd.text}
-																		></option>
-																	))}
-																</Input>
-															</Col>
-														</FormGroup>
-													</div>
+													<FormGroup row>
+														<Label for="exampleCustomSelect" sm={2}>
+															{d.label}
+														</Label>
+														<Col sm={10}>
+															<Input
+																type="select"
+																id="exampleCustomSelect"
+																name="customSelect"
+																required={d.required}
+															>
+																{d.options.map((dd) => (
+																	<option
+																		type="radio"
+																		id={dd.key}
+																		name="customRadio"
+																		label={dd.text}
+																	></option>
+																))}
+															</Input>
+														</Col>
+													</FormGroup>
 												)}
 											</div>
 										</div>
@@ -316,7 +311,7 @@ class Show_Forms extends Component {
 								</tr>
 							</tbody>
 						</Table>
-						<div class="form-group">
+						<div className="form-group">
 							<div className={baseClasses}>
 								<hr />
 							</div>

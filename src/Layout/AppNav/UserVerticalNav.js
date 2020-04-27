@@ -11,6 +11,14 @@ class Nav extends Component {
 	render() {
 		return (
 			<Fragment>
+				<h5 className="app-sidebar__heading">Dashboard</h5>
+				<MetisMenu
+					content={FormsNav}
+					activeLinkFromLocation
+					className="vertical-nav-menu"
+					iconNamePrefix=""
+					classNameStateIcon="pe-7s-angle-down"
+				/>
 				<h5 className="app-sidebar__heading">UI Components</h5>
 				<MetisMenu
 					content={ComponentsNav}
@@ -19,14 +27,7 @@ class Nav extends Component {
 					iconNamePrefix=""
 					classNameStateIcon="pe-7s-angle-down"
 				/>
-				<h5 className="app-sidebar__heading">Form</h5>
-				<MetisMenu
-					content={FormsNav}
-					activeLinkFromLocation
-					className="vertical-nav-menu"
-					iconNamePrefix=""
-					classNameStateIcon="pe-7s-angle-down"
-				/>
+
 			</Fragment>
 		);
 	}

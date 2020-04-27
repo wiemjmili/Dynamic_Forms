@@ -4,22 +4,20 @@ import {
 	ContentState,
 	EditorState,
 	convertFromHTML,
-	convertToRaw
+	convertToRaw,
 } from "draft-js";
 import draftToHtml from "draftjs-to-html";
 import { Editor } from "react-draft-wysiwyg";
-
 import DynamicOptionList from "./dynamic-option-list";
 import { get } from "../../Forms/stores/requests";
-import ID from "./UUID";
 
 const toolbar = {
 	options: ["inline", "list", "textAlign", "fontSize", "link", "history"],
 	inline: {
 		inDropdown: false,
 		className: undefined,
-		options: ["bold", "italic", "underline", "superscript", "subscript"]
-	}
+		options: ["bold", "italic", "underline", "superscript", "subscript"],
+	},
 };
 
 export default class FormElementsEdit extends React.Component {
@@ -28,7 +26,7 @@ export default class FormElementsEdit extends React.Component {
 		this.state = {
 			element: this.props.element,
 			data: this.props.data,
-			dirty: false
+			dirty: false,
 		};
 	}
 
@@ -45,7 +43,7 @@ export default class FormElementsEdit extends React.Component {
 		this.setState(
 			{
 				element: this_element,
-				dirty: true
+				dirty: true,
 			},
 			() => {
 				if (targProperty === "checked") {
@@ -66,7 +64,7 @@ export default class FormElementsEdit extends React.Component {
 
 		this.setState({
 			element: this_element,
-			dirty: true
+			dirty: true,
 		});
 	}
 
@@ -103,7 +101,7 @@ export default class FormElementsEdit extends React.Component {
 				const this_element = this.state.element;
 				this.setState({
 					element: this_element,
-					dirty: true
+					dirty: true,
 				});
 			});
 		}
@@ -161,7 +159,7 @@ export default class FormElementsEdit extends React.Component {
 			canHaveAlternateForm,
 			canHaveDisplayHorizontal,
 			canHaveOptionCorrect,
-			canHaveOptionValue
+			canHaveOptionValue,
 		} = this.props.element;
 
 		const this_files = this.props.files.length ? this.props.files : [];

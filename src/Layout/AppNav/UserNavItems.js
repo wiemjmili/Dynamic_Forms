@@ -1,3 +1,21 @@
+export const FormsNav = [
+	{
+		icon: "pe-7s-network",
+		label: "List of process",
+		to: "#/components/list_Process",
+	},
+	{
+		icon: "lnr-list",
+		label: "Historical process",
+		to: "#/components/historical_Process",
+	},
+
+	{
+		icon: "pe-7s-id",
+		label: "Process validation",
+		to: "#/components/validate_Process",
+	},
+];
 export const ComponentsNav = [
 	{
 		icon: "pe-7s-diamond",
@@ -32,45 +50,5 @@ export const ComponentsNav = [
 				to: "#/elements/navigation",
 			},
 		],
-	},
-	{
-		icon: "pe-7s-car",
-		label: "Components",
-		content: [
-			{
-				label: "Tabs",
-				to: "#/components/tabs",
-			},
-
-			{
-				label: "Progress Bar",
-				to: "#/components/progress-bar",
-			},
-			{
-				label: "List of Process",
-				to: "#/components/List_Process",
-			},
-			{
-				label: "Carousel",
-				to: "#/components/carousel",
-			},
-			{
-				label: "Maps",
-				to: "#/components/maps",
-			},
-		],
-	},
-];
-export const FormsNav = [
-	{
-		icon: "pe-7s-light",
-		label: "Controls",
-		to: "#/forms/controls",
-	},
-
-	{
-		icon: "pe-7s-pendrive",
-		label: "Validation",
-		to: "#/forms/validation",
 	},
 ];
