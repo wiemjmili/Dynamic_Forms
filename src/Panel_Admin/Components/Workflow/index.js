@@ -9,7 +9,7 @@ export default class Assign_Tasks extends React.Component {
 				<PageTitle
 					heading="Workflow"
 					subheading="Assign Tasks"
-					icon="pe-7s-network "
+					icon="pe-7s-exapnd2"
 				/>
 				<ListUT />
 			</Fragment>

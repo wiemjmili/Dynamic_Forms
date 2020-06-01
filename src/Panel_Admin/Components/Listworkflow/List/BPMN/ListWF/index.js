@@ -6,6 +6,7 @@ import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 import { Row, Col, Card, CardBody, CardTitle } from "reactstrap";
 
 export let xml = "";
+export let id = "";
 export class ListWF extends React.Component {
 	constructor(props) {
 		super(props);
@@ -30,6 +31,7 @@ export class ListWF extends React.Component {
 		for (let i = 0; i < n; i++) {
 			if (this.state.Workflow[i].id == this.state.id) {
 				xml = this.state.Workflow[i].wfxml;
+				id = this.state.id;
 			}
 		}
 	}
@@ -85,16 +87,17 @@ export class ListWF extends React.Component {
 
 													<td>
 														<Button
-															outline
 															className="mb-2 mr-2 btn-transition"
-															color="primary"
-															onClick={(ev) =>
+															size="lg"
+															outline
+															color="warning"
+															onClick={() =>
 																this.setState({
 																	id: WF.id,
 																})
 															}
 														>
-															Show Workflow
+															Show workflow
 														</Button>
 													</td>
 												</tr>

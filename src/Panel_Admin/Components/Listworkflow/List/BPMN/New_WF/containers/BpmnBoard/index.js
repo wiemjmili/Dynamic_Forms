@@ -10,7 +10,9 @@ import EditingTools from "./components/EditingTools";
 import BpmnModeler from "./custom-modeler";
 import "./style/app.css";
 import { xml } from "../../../ListWF";
+import { id } from "../../../ListWF";
 import xmlStr from "../../bpmn/xmlStr";
+import axios from "axios";
 let scale = 1;
 
 export default class BpmnBoard extends Component {
@@ -59,6 +61,7 @@ export default class BpmnBoard extends Component {
 	handleSave = (e) => {
 		this.bpmnModeler.saveXML({ format: true }, (err, xml) => {
 			const add_WF = base_url.add_WF();
+			console.log(xml);
 			fetch(add_WF, {
 				method: "post",
 				headers: { "Content-Type": "application/json" },
@@ -68,6 +71,30 @@ export default class BpmnBoard extends Component {
 			});
 		});
 	};
+	handleUpdateWF = (e) => {
+		this.bpmnModeler.saveXML({ format: true }, (err, xml) => {
+			const update_WF = base_url.updateWF();
+
+			fetch(update_WF, {
+				method: "post",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({
+					wfxml: xml,
+				}),
+			});
+		});
+	};
+
+	handleDeleteWF = () => {
+		if (id != "") {
+			axios({
+				method: "delete",
+				url: base_url.deleteWF() + "/" + id,
+			});
+		}
+		window.location.reload(false);
+	};
+
 	handleRedo = () => {
 		this.bpmnModeler.get("commandStack").redo();
 	};
@@ -113,18 +140,20 @@ export default class BpmnBoard extends Component {
 					<Card className="main-card mb-8">
 						<CardBody>
 							<Row>
-								<Col lg="5"></Col>
-								<Col lg="2">
+								<Col lg="2"></Col>
+								<Col lg="3">
 									<FileControls
 										onSaveFile={this.handleSaveFile}
 										onSaveImage={this.handleSaveImage}
 									/>
 								</Col>
-								<Col lg="2">
+								<Col lg="5">
 									<EditingTools
-										onSave={this.handleSave}
 										onRedo={this.handleRedo}
 										onUndo={this.handleUndo}
+										onSave={this.handleSave}
+										onUpdate={this.handleUpdateWF}
+										onDelete={this.handleDeleteWF}
 									/>
 								</Col>
 								<Col lg="2"></Col>

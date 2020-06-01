@@ -37,6 +37,8 @@ export class Access_Process extends Component {
 			date: date,
 		};
 		this.handleSubmit = this.handleSubmit.bind(this);
+		this.sendRequest = this.sendRequest.bind(this);
+		this.refreshPage = this.refreshPage.bind(this);
 	}
 	componentDidMount() {
 		axios.get(base_url.getlistProcessbyUser()).then((res) => {
@@ -44,26 +46,26 @@ export class Access_Process extends Component {
 			this.setState({ Workflow });
 		});
 	}
-	handleChange = (event) => {
+	handleChangeWF = (event) => {
 		this.setState({ Forms: [] });
 		this.setState({ nameWF: event.target.value });
 		nameWF = this.state.nameWF;
 	};
-	handleSubmit2 = (event) => {
+	handleSubmit = (event) => {
 		event.preventDefault();
 		let url = base_url.getFormbyProcess() + "/" + this.state.nameWF;
 		axios.get(url).then((res) => {
 			const Forms = res.data;
 			this.setState({ Forms });
+			console.log(this.state.Forms.length);
 		});
 	};
-	handleSubmit(event) {
+	sendRequest(event) {
 		event.preventDefault();
 		let n = this.state.Forms[0].data.length;
-		for (let pas = 1; pas < n; pas++) {
-			this.state.tab.push(this.state[pas]);
+		for (let i = 1; i < n; i++) {
+			this.state.tab.push(this.state[i]);
 		}
-
 		let add_request = base_url.addRequestbyUser();
 		fetch(add_request, {
 			method: "post",
@@ -105,7 +107,7 @@ export class Access_Process extends Component {
 							<td>
 								<select
 									required
-									onChange={this.handleChange}
+									onChange={this.handleChangeWF}
 									className="browser-default custom-select"
 								>
 									<option selected value="" value={nameWF}></option>
@@ -115,7 +117,7 @@ export class Access_Process extends Component {
 								</select>
 							</td>
 							<td>
-								<form onSubmit={this.handleSubmit2}>
+								<form onSubmit={this.handleSubmit}>
 									<Button
 										size="lg"
 										color="secondary"
@@ -131,115 +133,270 @@ export class Access_Process extends Component {
 						</tr>
 					</tbody>
 				</Table>
-
-				{this.state.Forms.map((F) => (
+				{this.state.Forms.length != 0 && (
 					<div>
-						<Table className="mb-0">
-							<tbody>
-								<tr>
-									{F.data.map((d, index) => (
-										<div>
-											<div>
-												{d.element == "Header" && (
+						{this.state.Forms.map((F) => (
+							<div>
+								<Table className="mb-0">
+									<tbody>
+										<tr>
+											{F.data.map((d, index, index2) => (
+												<div>
 													<div>
-														<h2>{d.content}</h2>
-														<br />
+														{d.element == "Header" && (
+															<div>
+																<h2>{d.content}</h2>
+																<br />
+															</div>
+														)}
 													</div>
-												)}
-											</div>
-											<div>
-												{d.element == "TextInput" && (
-													<FormGroup row>
-														<Col sm={3}>
-															<Label>{d.label}</Label>
-														</Col>
-														<Col sm={9}>
-															<Input
-																required={d.required}
-																className="form-control"
-																placeholder={d.label}
-																value={this.state[d.id]}
-																onChange={(ev) =>
-																	this.setState({
-																		[index]: [d.id, ev.target.value],
-																	})
-																}
-															/>
-														</Col>
-													</FormGroup>
-												)}
-												{d.element == "DatePicker" && (
-													<FormGroup row>
-														<Col sm={3}>
-															<Label>{d.label}</Label>
-														</Col>
-														<Col sm={9}>
-															<Input
-																type="date"
-																className="form-control"
-																required={d.required}
-																value={this.state[d.id]}
-																onChange={(ev) =>
-																	this.setState({
-																		[index]: [d.id, ev.target.value],
-																	})
-																}
-															/>
-														</Col>
-													</FormGroup>
-												)}
-												{d.element == "Checkboxes" && (
-													<FormGroup row>
-														<Col sm={3}>
-															<Label>{d.label}</Label>
-														</Col>
-														<Col sm={9}>
-															{d.options.map((ch) => (
-																<CustomInput
-																	type="checkbox"
-																	id={ch.key}
-																	label={ch.text}
-																	required={d.required}
-																	value={this.state[d.id]}
-																	onChange={(ev) =>
-																		this.setState({
-																			[index]: [d.id, ev.target.value],
-																		})
-																	}
-																/>
-															))}
-														</Col>
-													</FormGroup>
-												)}
-												{d.element == "RadioButtons" && (
-													<FormGroup row>
-														<Col sm={3}>
-															<Label>{d.label}</Label>
-														</Col>
-														<Col sm={9}>
-															{d.options.map((radio) => (
-																<CustomInput
-																	type="radio"
-																	id={radio.key}
-																	label={radio.text}
-																	required={d.required}
-																	value={this.state[d.id]}
-																	onChange={(ev) =>
-																		this.setState({
-																			[index]: [d.id, ev.target.value],
-																		})
-																	}
-																/>
-															))}
-														</Col>
-													</FormGroup>
-												)}
-												{d.element == "Paragraph" && (
-													<FormGroup row>
-														<Col sm={3}>
-															<Label>{d.content}</Label>
-														</Col>
-														<Col sm={9}>
+													<div>
+														{d.element == "TextInput" && (
+															<FormGroup row>
+																<Col sm={3}>
+																	<Label>{d.label}</Label>
+																</Col>
+																<Col sm={9}>
+																	<Input
+																		required={d.required}
+																		className="form-control"
+																		placeholder={d.label}
+																		value={this.state[d.id]}
+																		onChange={(ev) =>
+																			this.setState({
+																				[index]: [d.id, ev.target.value],
+																			})
+																		}
+																	/>
+																</Col>
+															</FormGroup>
+														)}
+														{d.element == "DatePicker" && (
+															<FormGroup row>
+																<Col sm={3}>
+																	<Label>{d.label}</Label>
+																</Col>
+																<Col sm={9}>
+																	<Input
+																		type="date"
+																		className="form-control"
+																		required={d.required}
+																		value={this.state.date}
+																		onChange={(ev) =>
+																			this.setState({
+																				date: ev.target.value,
+																				[index]: [d.id, date],
+																			})
+																		}
+																	/>
+																</Col>
+															</FormGroup>
+														)}
+														{d.element == "Checkboxes" && (
+															<FormGroup row>
+																<Col sm={3}>
+																	<Label>{d.label}</Label>
+																</Col>
+																<Col sm={9}>
+																	{d.options.map((ch) => (
+																		<CustomInput
+																			type="checkbox"
+																			id={ch.key}
+																			label={ch.text}
+																			required={d.required}
+																			value={this.state[d.id]}
+																			onChange={(ev) =>
+																				this.setState({
+																					[index]: [d.id, ev.target.value],
+																				})
+																			}
+																		/>
+																	))}
+																</Col>
+															</FormGroup>
+														)}
+														{d.element == "RadioButtons" && (
+															<FormGroup row>
+																<Col sm={3}>
+																	<Label>{d.label}</Label>
+																</Col>
+																<Col sm={9}>
+																	{d.options.map((radio) => (
+																		<CustomInput
+																			type="radio"
+																			id={radio.key}
+																			label={radio.text}
+																			required={d.required}
+																			value={this.state[d.id]}
+																			onChange={(ev) =>
+																				this.setState({
+																					[index]: [d.id, ev.target.value],
+																				})
+																			}
+																		/>
+																	))}
+																</Col>
+															</FormGroup>
+														)}
+														{d.element == "Paragraph" && (
+															<FormGroup row>
+																<Col sm={3}>
+																	<Label>{d.content}</Label>
+																</Col>
+																<Col sm={9}>
+																	<Input
+																		type="textarea"
+																		required={d.required}
+																		value={this.state[d.id]}
+																		onChange={(ev) =>
+																			this.setState({
+																				[index]: [d.id, ev.target.value],
+																			})
+																		}
+																	/>
+																</Col>
+															</FormGroup>
+														)}
+														{d.element == "Download" && (
+															<FormGroup row>
+																<Col sm={3}>
+																	<Label>{d.content}</Label>
+																</Col>
+																<Col sm={9}>
+																	<Input
+																		type="file"
+																		value={this.state[d.id]}
+																		onChange={(ev) =>
+																			this.setState({
+																				[index]: [d.id, ev.target.value],
+																			})
+																		}
+																	/>
+																</Col>
+															</FormGroup>
+														)}
+														{d.element == "Camera" && (
+															<FormGroup row>
+																<Col sm={3}>
+																	<Label>Select image</Label>
+																</Col>
+																<Col sm={9}>
+																	<Input
+																		type="file"
+																		name="file"
+																		id="exampleFile"
+																		value={this.state[d.id]}
+																		onChange={(ev) =>
+																			this.setState({
+																				[index]: [d.id, ev.target.value],
+																			})
+																		}
+																	/>
+																</Col>
+															</FormGroup>
+														)}
+														{d.element == "Range" && (
+															<FormGroup row>
+																<Col sm={3}>
+																	<Label>{d.label}</Label>
+																</Col>
+																<Col sm={9}>
+																	<Input
+																		type="range"
+																		class="form-control-range"
+																		min={d.min_value}
+																		max={d.max_value}
+																		value={this.state[d.id]}
+																		onChange={(ev) =>
+																			this.setState({
+																				[index]: [d.id, ev.target.value],
+																			})
+																		}
+																	/>
+																</Col>
+															</FormGroup>
+														)}
+														{d.element == "HyperLink" && (
+															<FormGroup row>
+																<Col sm={3}>
+																	<Label>{d.content}</Label>
+																</Col>
+																<Col sm={9}>
+																	<Input
+																		type="text"
+																		placeholder={d.href}
+																		value={this.state[d.id]}
+																		onChange={(ev) =>
+																			this.setState({
+																				[index]: [d.id, ev.target.value],
+																			})
+																		}
+																	/>
+																</Col>
+															</FormGroup>
+														)}
+														{d.element == "NumberInput" && (
+															<FormGroup row>
+																<Col sm={3}>
+																	<Label>{d.label}</Label>
+																</Col>
+																<Col sm={9}>
+																	<Input
+																		type="number"
+																		placeholder="Number Input"
+																		required={d.required}
+																		value={this.state[d.id]}
+																		onChange={(ev) =>
+																			this.setState({
+																				[index]: [d.id, ev.target.value],
+																			})
+																		}
+																	/>
+																</Col>
+															</FormGroup>
+														)}
+														{d.element == "Tags" && (
+															<FormGroup row>
+																<Col sm={3}>
+																	<Label>{d.label}</Label>
+																</Col>
+																<Col sm={9}>
+																	<Input
+																		type="select"
+																		required={d.required}
+																		onChange={(ev) =>
+																			this.setState({
+																				[index]: [d.id, ev.target.value],
+																			})
+																		}
+																	>
+																		<option
+																			selected
+																			value=""
+																			value={this.state[d.id]}
+																		></option>
+																		{d.options.map((op) => (
+																			<option id={op.key}>{op.text}</option>
+																		))}
+																	</Input>
+																</Col>
+															</FormGroup>
+														)}
+														{d.element == "Label" && (
+															<FormGroup row>
+																<Label for="exampleFile" sm={2}>
+																	{d.text}
+																</Label>
+															</FormGroup>
+														)}
+														{d.element == "LineBreak" && (
+															<div className="form-group">
+																<div className={baseClasses}>
+																	<hr />
+																</div>
+															</div>
+														)}
+														{d.element == "TextArea" && (
 															<Input
 																type="textarea"
 																required={d.required}
@@ -250,206 +407,55 @@ export class Access_Process extends Component {
 																	})
 																}
 															/>
-														</Col>
-													</FormGroup>
-												)}
-												{d.element == "Download" && (
-													<FormGroup row>
-														<Col sm={3}>
-															<Label>{d.content}</Label>
-														</Col>
-														<Col sm={9}>
-															<Input
-																type="file"
-																value={this.state[d.id]}
-																onChange={(ev) =>
-																	this.setState({
-																		[index]: [d.id, ev.target.value],
-																	})
-																}
-															/>
-														</Col>
-													</FormGroup>
-												)}
-												{d.element == "Camera" && (
-													<FormGroup row>
-														<Col sm={3}>
-															<Label>Select image</Label>
-														</Col>
-														<Col sm={9}>
-															<Input
-																type="file"
-																name="file"
-																id="exampleFile"
-																value={this.state[d.id]}
-																onChange={(ev) =>
-																	this.setState({
-																		[index]: [d.id, ev.target.value],
-																	})
-																}
-															/>
-														</Col>
-													</FormGroup>
-												)}
-												{d.element == "Range" && (
-													<FormGroup row>
-														<Col sm={3}>
-															<Label>{d.label}</Label>
-														</Col>
-														<Col sm={9}>
-															<Input
-																type="range"
-																class="form-control-range"
-																min={d.min_value}
-																max={d.max_value}
-																value={this.state[d.id]}
-																onChange={(ev) =>
-																	this.setState({
-																		[index]: [d.id, ev.target.value],
-																	})
-																}
-															/>
-														</Col>
-													</FormGroup>
-												)}
-												{d.element == "HyperLink" && (
-													<FormGroup row>
-														<Col sm={3}>
-															<Label>{d.content}</Label>
-														</Col>
-														<Col sm={9}>
-															<Input
-																type="text"
-																placeholder={d.href}
-																value={this.state[d.id]}
-																onChange={(ev) =>
-																	this.setState({
-																		[index]: [d.id, ev.target.value],
-																	})
-																}
-															/>
-														</Col>
-													</FormGroup>
-												)}
-												{d.element == "NumberInput" && (
-													<FormGroup row>
-														<Col sm={3}>
-															<Label>{d.label}</Label>
-														</Col>
-														<Col sm={9}>
-															<Input
-																type="number"
-																placeholder="Number Input"
-																required={d.required}
-																value={this.state[d.id]}
-																onChange={(ev) =>
-																	this.setState({
-																		[index]: [d.id, ev.target.value],
-																	})
-																}
-															/>
-														</Col>
-													</FormGroup>
-												)}
-												{d.element == "Tags" && (
-													<FormGroup row>
-														<Col sm={3}>
-															<Label>{d.label}</Label>
-														</Col>
-														<Col sm={9}>
-															<Input
-																type="select"
-																required={d.required}
-																onChange={(ev) =>
-																	this.setState({
-																		[index]: [d.id, ev.target.value],
-																	})
-																}
-															>
-																<option
-																	selected
-																	value=""
-																	value={this.state[d.id]}
-																></option>
-																{d.options.map((op) => (
-																	<option id={op.key}>{op.text}</option>
-																))}
-															</Input>
-														</Col>
-													</FormGroup>
-												)}
-												{d.element == "Label" && (
-													<FormGroup row>
-														<Label for="exampleFile" sm={2}>
-															{d.text}
-														</Label>
-													</FormGroup>
-												)}
-												{d.element == "LineBreak" && (
-													<div className="form-group">
-														<div className={baseClasses}>
-															<hr />
-														</div>
+														)}
+														{d.element == "Dropdown" && (
+															<FormGroup row>
+																<Col sm={3}>
+																	<Label>{d.label}</Label>
+																</Col>
+																<Col sm={9}>
+																	<Input
+																		type="select"
+																		id="exampleCustomSelect"
+																		required={d.required}
+																		onChange={(ev) =>
+																			this.setState({
+																				[index]: [d.id, ev.target.value],
+																			})
+																		}
+																	>
+																		<option
+																			selected
+																			value=""
+																			value={this.state[d.id]}
+																		></option>
+																		{d.options.map((dd) => (
+																			<option id={dd.key}>{dd.text}</option>
+																		))}
+																	</Input>
+																</Col>
+															</FormGroup>
+														)}
 													</div>
-												)}
-												{d.element == "TextArea" && (
-													<Input
-														type="textarea"
-														required={d.required}
-														value={this.state[d.id]}
-														onChange={(ev) =>
-															this.setState({
-																[index]: [d.id, ev.target.value],
-															})
-														}
-													/>
-												)}
-												{d.element == "Dropdown" && (
-													<FormGroup row>
-														<Col sm={3}>
-															<Label>{d.label}</Label>
-														</Col>
-														<Col sm={9}>
-															<Input
-																type="select"
-																id="exampleCustomSelect"
-																required={d.required}
-																onChange={(ev) =>
-																	this.setState({
-																		[index]: [d.id, ev.target.value],
-																	})
-																}
-															>
-																<option
-																	selected
-																	value=""
-																	value={this.state[d.id]}
-																></option>
-																{d.options.map((dd) => (
-																	<option id={dd.key}>{dd.text}</option>
-																))}
-															</Input>
-														</Col>
-													</FormGroup>
-												)}
-											</div>
-										</div>
-									))}
-								</tr>
-							</tbody>
-						</Table>
-						{this.state.nameWF != "" && (
-							<ModalFooter>
-								<Button color="danger" onClick={this.refreshPage}>
-									Cancel
-								</Button>
-								<Button color="success" onClick={this.handleSubmit}>
-									Send
-								</Button>
-							</ModalFooter>
-						)}
+												</div>
+											))}
+										</tr>
+									</tbody>
+								</Table>
+								{this.state.nameWF != "" && (
+									<ModalFooter>
+										<Button color="danger" onClick={this.refreshPage}>
+											Close
+										</Button>
+										<Button color="success" onClick={this.sendRequest}>
+											Send
+										</Button>
+									</ModalFooter>
+								)}
+							</div>
+						))}
 					</div>
-				))}
+				)}
 			</div>
 		);
 	}

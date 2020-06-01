@@ -15,7 +15,7 @@ const AppMain = () => {
 					<div className="loader-container">
 						<div className="loader-container-inner">
 							<h6 className="mt-5">
-								Please wait while we load all the Components examples
+								Please wait while we load all the Components
 							</h6>
 						</div>
 					</div>

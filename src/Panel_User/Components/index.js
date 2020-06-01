@@ -9,9 +9,13 @@ import List_Process from "./List_Process/";
 
 import Historical_Process from "./Historical_Process/";
 
-// Validate_Process
+// Process_To_Validate
 
-import Validate_Process from "./Validate_Process/";
+import Validate_Process from "./Process_To_Validate/";
+
+// Validated_Process
+
+import Validated_Process from "./Validated_Process/";
 
 // Layout
 
@@ -39,11 +43,18 @@ const Components = ({ match }) => (
 						component={Historical_Process}
 					/>
 
-					{/* Validate_Process */}
+					{/* Process_To_validate*/}
 
 					<Route
 						path={`${match.url}/validate_Process`}
 						component={Validate_Process}
+					/>
+
+					{/* Validated_Process*/}
+
+					<Route
+						path={`${match.url}/validated_Process`}
+						component={Validated_Process}
 					/>
 				</div>
 				<AppFooter />

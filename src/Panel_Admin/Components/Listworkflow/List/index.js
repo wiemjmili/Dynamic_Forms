@@ -6,12 +6,12 @@ import NewWF from "./BPMN/New_WF";
 
 const tabsContent = [
 	{
-		title: "List of Workflow",
+		title: "List of workflow",
 		content: <ListWF />,
 	},
 
 	{
-		title: "New Workflow",
+		title: "New workflow",
 		content: <NewWF />,
 	},
 ];

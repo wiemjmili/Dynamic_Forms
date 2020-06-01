@@ -4,9 +4,7 @@ import { HashRouter, Route, Switch } from "react-router-dom";
 const loading = () => (
 	<div className="loader-container">
 		<div className="loader-container-inner">
-			<h6 className="mt-5">
-				Please wait while we load all the Components examples
-			</h6>
+			<h6 className="mt-5">Please wait while we load all the Components</h6>
 		</div>
 	</div>
 );
@@ -26,6 +24,21 @@ class App extends Component {
 							path="/"
 							name="Login Page"
 							render={(props) => <Login {...props} />}
+						/>
+						<Route
+							path="/components/users"
+							name="Admin Page"
+							render={(props) => <Admin_Panel {...props} />}
+						/>
+						<Route
+							path="/components/groups"
+							name="Admin Page"
+							render={(props) => <Admin_Panel {...props} />}
+						/>
+						<Route
+							path="/components/roles"
+							name="Admin Page"
+							render={(props) => <Admin_Panel {...props} />}
 						/>
 						<Route
 							path="/components/list_WF"
@@ -65,6 +78,11 @@ class App extends Component {
 						/>
 						<Route
 							path="/components/validate_Process"
+							name="User Page"
+							render={(props) => <User_Panel {...props} />}
+						/>
+						<Route
+							path="/components/validated_Process"
 							name="User Page"
 							render={(props) => <User_Panel {...props} />}
 						/>

@@ -1,14 +1,14 @@
 import React, { Fragment } from "react";
+import PropTypes from "prop-types";
+import { withRouter } from "react-router-dom";
 import {
 	DropdownToggle,
 	DropdownMenu,
 	DropdownItem,
 	Nav,
-	Button,
 	NavItem,
 	NavLink,
-	UncontrolledTooltip,
-	UncontrolledButtonDropdown
+	UncontrolledButtonDropdown,
 } from "reactstrap";
 
 import { toast, Bounce } from "react-toastify";
@@ -19,12 +19,19 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import avatar1 from "../../../assets/utils/images/avatars/1.png";
 
+const propTypes = {
+	children: PropTypes.node,
+};
+const defaultProps = {};
+
 class UserBox extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			active: false
+			active: false,
+			navigate: false,
 		};
+		this.signOut = this.signOut.bind(this);
 	}
 
 	notify2 = () =>
@@ -33,12 +40,13 @@ class UserBox extends React.Component {
 			closeButton: true,
 			autoClose: 5000,
 			position: "bottom-center",
-			type: "success"
+			type: "success",
 		}));
 
-	signOut = () =>
-		this.props.history.push('/');
-
+	signOut = () => {
+		const { history } = this.props;
+		if (history) history.push("/");
+	};
 
 	render() {
 		return (
@@ -50,7 +58,7 @@ class UserBox extends React.Component {
 								<UncontrolledButtonDropdown>
 									<DropdownToggle color="link" className="p-0">
 										<img
-											width={42}
+											width={36}
 											className="rounded-circle"
 											src={avatar1}
 											alt=""
@@ -64,8 +72,18 @@ class UserBox extends React.Component {
 										<Nav vertical>
 											<NavItem>
 												<NavLink href="javascript:void(0);">
-													<DropdownItem header tag="div" className="text-center"><strong>My Account</strong></DropdownItem>
-													<DropdownItem onClick={this.signOut}><i className="fa fa-lock"></i> Logout</DropdownItem>
+													<DropdownItem
+														header
+														tag="div"
+														className="text-center"
+													>
+														<strong>My Account</strong>
+													</DropdownItem>
+
+													<DropdownItem onClick={() => this.signOut()}>
+														<i className="fa fa-lock"></i>
+														&nbsp;&nbsp;Logout
+													</DropdownItem>
 												</NavLink>
 											</NavItem>
 										</Nav>
@@ -76,27 +94,13 @@ class UserBox extends React.Component {
 								<div className="widget-heading">Admin</div>
 								<div className="widget-subheading">Business&Decision</div>
 							</div>
-
-							<div className="widget-content-right header-user-info ml-3">
-								<Button
-									className="btn-shadow p-1"
-									size="sm"
-									onClick={this.notify2}
-									color="info"
-									id="Tooltip-1"
-								>
-									<FontAwesomeIcon className="mr-2 ml-2" icon={faCalendarAlt} />
-								</Button>
-								<UncontrolledTooltip placement="bottom" target={"Tooltip-1"}>
-									Notifications!
-								</UncontrolledTooltip>
-							</div>
 						</div>
 					</div>
 				</div>
-			</Fragment >
+			</Fragment>
 		);
 	}
 }
-
-export default UserBox;
+UserBox.propTypes = propTypes;
+UserBox.defaultProps = defaultProps;
+export default withRouter(UserBox);

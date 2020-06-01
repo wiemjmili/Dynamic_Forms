@@ -1,6 +1,6 @@
 import React from "react";
 
-export default ({ onUndo, onRedo, onSave }) => (
+export default ({ onUndo, onRedo, onSave, onUpdate, onDelete }) => (
 	<div
 		className="io-editing-tools"
 		style={{ display: "inline-block", position: "relative" }}
@@ -17,7 +17,17 @@ export default ({ onUndo, onRedo, onSave }) => (
 				</button>
 			</li>
 			<li className="io-control">
-				<button title="save" onClick={onSave}>
+				<button title="delete workflow" onClick={onDelete}>
+					<span className="pe-7s-trash" />
+				</button>
+			</li>
+			<li className="io-control">
+				<button title="update workflow" onClick={onUpdate}>
+					<span className="lnr-sync"></span>
+				</button>
+			</li>
+			<li className="io-control">
+				<button title="save workflow" onClick={onSave}>
 					<span className="icon-save" />
 				</button>
 			</li>

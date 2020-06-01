@@ -32,7 +32,11 @@ class Login extends Component {
 		event.preventDefault();
 		axios
 			.get(
-				base_url.check_User() + "/" + this.state.email + "/" + this.state.login
+				base_url.check_User() +
+					"/" +
+					this.state.email +
+					"/" +
+					this.state.password
 			)
 			.then((res) => {
 				const verif = res.data;
@@ -105,7 +109,7 @@ class Login extends Component {
 											<InputGroup className="mb-4">
 												<InputGroupAddon addonType="prepend">
 													<InputGroupText>
-														<i className="icon-lock"> </i>{" "}
+														<i className="icon-lock"> </i>
 													</InputGroupText>
 												</InputGroupAddon>
 												<Input
@@ -114,7 +118,7 @@ class Login extends Component {
 													placeholder="Password"
 													onChange={(ev) =>
 														this.setState({
-															login: ev.target.value,
+															password: ev.target.value,
 														})
 													}
 													autoComplete="current-password"

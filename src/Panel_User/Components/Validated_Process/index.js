@@ -12,7 +12,7 @@ export default class Validate_Process extends React.Component {
 				<PageTitle
 					heading="Validation"
 					subheading="Validate requests"
-					icon="pe-7s-phone icon-gradient bg-premium-dark"
+					icon="pe-7s-id"
 				/>
 				<Validate_Proc />
 			</Fragment>

@@ -1,6 +1,18 @@
 import React, { Fragment } from "react";
 import { Route } from "react-router-dom";
 
+// Manage Users
+
+import Users from "./Users/";
+
+// Manage Groups
+
+import Groups from "./Groups/";
+
+// Manage Roles
+
+import Roles from "./Roles/";
+
 // List_of_worflow
 
 import List_Workflow from "./Listworkflow/List";
@@ -34,6 +46,18 @@ const Components = ({ match }) => (
 			<AppSidebar />
 			<div className="app-main__outer">
 				<div className="app-main__inner">
+					{/* Manage Users */}
+
+					<Route path={`${match.url}/users`} component={Users} />
+
+					{/* Manage Groups */}
+
+					<Route path={`${match.url}/groups`} component={Groups} />
+
+					{/* Manage Roles */}
+
+					<Route path={`${match.url}/roles`} component={Roles} />
+
 					{/* List_Workflow */}
 
 					<Route path={`${match.url}/list_WF`} component={List_Workflow} />

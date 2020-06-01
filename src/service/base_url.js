@@ -1,26 +1,33 @@
-const url = "http://localhost:8080";
-
 module.exports = {
-	//Workflow
+	/*Workflow*/
 
 	//get_all_workflow
 	all_WF: function () {
-		return url + "/api/workflow/findAllWF";
+		return "/api/workflow/findAllWF";
 	},
 	//add_workflow
 	add_WF: function () {
 		return "/api/workflow/addWF";
 	},
+	//updateWF
+	updateWF: function () {
+		return "/api/workflow/updateWF";
+	},
 
-	//UserTask
+	//deleteWF
+	deleteWF: function () {
+		return "/api/workflow/deleteWF";
+	},
+
+	/*UserTask*/
 
 	//get_all_userTasks
 	all_UserTasks: function () {
-		return url + "/api/userTask/findAlltasks";
+		return "/api/userTask/findAlltasks";
 	},
 	// find_userTask
 	find_UserTask: function () {
-		return url + "/api/userTask/findUsertask";
+		return "/api/userTask/findUsertask";
 	},
 
 	//affect_Group_to_UserTask
@@ -28,18 +35,32 @@ module.exports = {
 		return "/api/userTask/updateUT";
 	},
 
-	//Group
+	/*Group*/
 
 	//get_all_groups
 	all_Groups: function () {
-		return url + "/api/group/findAllGroups";
+		return "/api/group/findAllGroups";
+	},
+	addGroup: function () {
+		return "/api/group/addGroup";
+	},
+	deleteGroup: function () {
+		return "/api/group/deleteGroup";
+	},
+	getGroup_Byid: function () {
+		return "/api/group/getGroup_Byid";
 	},
 
-	//Form
+	/*Form*/
 
-	//get_allForms
+	//get_allForms_by_WF
 	get_Forms: function () {
-		return url + "/api/form/findAllForms";
+		return "/api/form/findAllForms";
+	},
+
+	//get_allForms_by_WF
+	all_Forms: function () {
+		return "/api/form/findAllForm";
 	},
 
 	//add_newForm
@@ -47,24 +68,56 @@ module.exports = {
 		return "/api/form/addForm";
 	},
 
-	//getFormbyProcess
-	getFormbyProcess: function () {
-		return url + "/api/form/findFormbyProcess";
+	//getFormbyUserTask
+
+	getFormbyUserTask: function () {
+		return "/api/form/getFormbyUserTask";
+	},
+	//getFormsByUser
+	getFormsByUser: function () {
+		return "/api/form/getFormsByUser";
 	},
 
-	//User
+	//getFormbyProcess
+	getFormbyProcess: function () {
+		return "/api/form/findFormbyProcess";
+	},
+	//getAllForms
+	getAllForms: function () {
+		return "/api/form/findAllForm";
+	},
+
+	/*User*/
 
 	//check_User
 	check_User: function () {
-		return url + "/api/user/check_User";
+		return "/api/user/check_User";
+	},
+
+	//check_User
+	getUser_Byid: function () {
+		return "/api/user/getUser_Byid";
 	},
 
 	//getlistProcessbyUser
 	getlistProcessbyUser: function () {
-		return url + "/api/workflow/getlistProcessbyUser";
+		return "/api/workflow/getlistProcessbyUser";
 	},
 
-	//Requests
+	//getAllUser
+	getAllUsers: function () {
+		return "/api/user/getAllUsers";
+	},
+	//addUser
+	addUser: function () {
+		return "/api/user/addUser";
+	},
+	// delete User
+	deleteUser: function () {
+		return "/api/user/deleteUser";
+	},
+
+	/*Requests*/
 
 	//addRequest
 	addRequestbyUser: function () {
@@ -80,9 +133,51 @@ module.exports = {
 	getRequestToValidate: function () {
 		return "/api/requests/getRequestToValidate";
 	},
+	///getRequestValidated
+	getRequestValidated: function () {
+		return "/api/requests/getRequestValidated";
+	},
 
-	//getAllForms
-	getAllForms: function () {
-		return "/api/form/findAllForm";
+	//getRequestByid
+	getRequestByid: function () {
+		return "/api/requests/getRequestByid";
+	},
+	//getALLRequest
+	getALLRequest: function () {
+		return "/api/requests/getALLRequest";
+	},
+	//cancelRequest
+	cancelRequest: function () {
+		return "/api/requests/cancelRequest";
+	},
+
+	/*Response*/
+
+	//addResponse
+	addResponsebyUser: function () {
+		return "/api/response/addResponse";
+	},
+
+	//getAllResponseByUser
+	getAllResponseByUser: function () {
+		return "/api/response/getAllResponsebyUser";
+	},
+
+	getAllResponse: function () {
+		return "/api/response/getAllResponse";
+	},
+
+	/*Role*/
+	addRole: function () {
+		return "/api/role/addRole";
+	},
+	getAllRoles: function () {
+		return "/api/role/getAllRoles";
+	},
+	deleteRole: function () {
+		return "/api/role/deleteRole";
+	},
+	getRole_Byid: function () {
+		return "/api/role/getRole_Byid";
 	},
 };

@@ -1,20 +1,3 @@
-export const Security = [
-	{
-		icon: "pe-7s-user",
-		label: "Manage users",
-		to: "#/components/notifications",
-	},
-	{
-		icon: "pe-7s-users",
-		label: "Manage groups",
-		to: "#/components/notifications",
-	},
-	{
-		icon: "pe-7s-config",
-		label: "Manage roles",
-		to: "#/components/notifications",
-	},
-];
 export const workflow = [
 	{
 		icon: "pe-7s-network",
@@ -27,7 +10,7 @@ export const workflow = [
 			},
 			{
 				icon: "pe-7s-network",
-				label: "New Workflow",
+				label: "New workflow",
 				to: "#/components/new_WF",
 			},
 
@@ -39,15 +22,41 @@ export const workflow = [
 		],
 	},
 ];
+
+export const Security = [
+	{
+		icon: "pe-7s-user",
+		label: "Manage users",
+		to: "#/components/users",
+	},
+	{
+		icon: "pe-7s-users",
+		label: "Manage groups",
+		to: "#/components/groups",
+	},
+	{
+		icon: "pe-7s-config",
+		label: "Manage roles",
+		to: "#/components/roles",
+	},
+];
+
 export const Forms = [
 	{
 		icon: "pe-7s-back-2",
-		label: "Manage forms",
-		to: "#/components/Forms",
-	},
-	{
-		icon: "pe-7s-id",
-		label: "Show forms",
-		to: "#/components/show_Forms",
+		label: "Forms",
+		content: [
+			{
+				icon: "pe-7s-back-2",
+				label: "Manage forms",
+				to: "#/components/Forms",
+			},
+
+			{
+				icon: "pe-7s-id",
+				label: "Show forms",
+				to: "#/components/show_Forms",
+			},
+		],
 	},
 ];

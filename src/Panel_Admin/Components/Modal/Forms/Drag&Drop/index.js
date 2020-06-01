@@ -3,11 +3,13 @@ import store from "../../Forms/stores/store";
 import ReactFormGenerator from "./form";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 import { toast, Bounce } from "react-toastify";
-import { Row, Col, Card, CardBody, Button } from "reactstrap";
+import { Row, Col, Card, CardBody, Button, Label, Table } from "reactstrap";
 import base_url from "../../../../../../src/service/base_url";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
+import Show_Forms from "./show_form";
+import Select from "react-select";
 
 const answers = {};
 
@@ -20,12 +22,15 @@ export default class Modals extends React.Component {
 			Forms: "",
 			nameUT: "",
 			idUT: "",
-			UserTasks: [],
-			Workflow: [],
+			verif: "",
+			optionsUT: [],
+			optionsWF: [],
+			click: false,
 			previewVisible: false,
 			roPreviewVisible: false,
 		};
 		const update = this._onChange.bind(this);
+		this.get_UT = this.get_UT.bind(this);
 		this._onSubmit = this._onSubmit.bind(this);
 		store.subscribe((state) => update(state.data));
 	}
@@ -38,63 +43,84 @@ export default class Modals extends React.Component {
 
 		axios.get(base_url.all_WF()).then((res) => {
 			const Workflow = res.data;
+
 			this.setState({ Workflow });
+			const n = this.state.Workflow.length;
+			let optionsWF = [];
+			for (let i = 0; i < n; i++) {
+				let WF = {
+					value: this.state.Workflow[i].id,
+					label: this.state.Workflow[i].name,
+				};
+				optionsWF.push(WF);
+			}
+			this.setState({ optionsWF });
 		});
 	}
-	handleChange = (event) => {
-		console.log(this.state.data);
-		event.preventDefault();
-		this.setState({ nameWF: event.target.value });
-	};
-	handleChange1 = (event) => {
-		event.preventDefault();
-		this.setState({ nameUT: event.target.value });
+	handleChangeWF = (selectedOption) => {
+		this.setState({ selectedOption });
+		this.setState({ idWF: selectedOption.value });
+		this.setState({ nameWF: selectedOption.label });
 	};
 
-	handleSubmit = (event) => {
-		event.preventDefault();
-		const nameWF = this.state.nameWF;
-		let get_allUT = base_url.all_UserTasks() + "/" + nameWF;
+	get_UT = () => {
+		let get_allUT = base_url.all_UserTasks() + "/" + this.state.idWF;
 		axios.get(get_allUT).then((res) => {
 			const UserTasks = res.data;
 			this.setState({ UserTasks });
+			const n = this.state.UserTasks.length;
+			let optionsUT = [];
+			for (let i = 0; i < n; i++) {
+				let UT = {
+					value: this.state.UserTasks[i].id,
+					label: this.state.UserTasks[i].name,
+				};
+				optionsUT.push(UT);
+			}
+			this.setState({ optionsUT });
 		});
 	};
 
-	showPreview() {
-		let get_UT =
-			base_url.find_UserTask() +
-			"/" +
-			this.state.nameUT +
-			"/" +
-			this.state.nameWF;
-		let add_Form = base_url.add_Form();
+	handleChangeUT = (selectedOption) => {
+		this.setState({ selectedOption });
+		this.setState({ idUT: selectedOption.value });
+		this.setState({ nameUT: selectedOption.label });
+	};
 
-		axios.get(get_UT).then((res) => {
+	showPreview() {
+		let add_Form = base_url.add_Form();
+		if (this.state.data.length != 0 && this.state.idUT != "") {
 			fetch(add_Form, {
 				method: "post",
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify({
 					data: this.state.data,
-					idUT: res.data,
+					idUT: this.state.idUT,
 				}),
-			}).then((d) => {
-				console.log({ d });
 			});
-		});
-		this.toastId = toast(
-			"Form successfully added for " + "'" + this.state.nameUT + "'",
-			{
-				transition: Bounce,
-				closeButton: true,
-				autoClose: 5000,
-				position: "bottom-center",
-				type: "success",
-			}
-		);
+
+			this.toastId = toast(
+				"Form successfully added to usertask " +
+					"' " +
+					this.state.nameUT +
+					" '",
+				{
+					transition: Bounce,
+					closeButton: true,
+					autoClose: 5000,
+					position: "bottom-center",
+					type: "success",
+				}
+			);
+		} else {
+			toast.error("Error ! some information was unavailable", {
+				position: toast.POSITION.TOP_LEFT,
+			});
+		}
 		this.setState({
 			previewVisible: true,
 		});
+		//window.location.reload(false);
 	}
 
 	_onChange(data) {
@@ -136,49 +162,34 @@ export default class Modals extends React.Component {
 							<Card className="main-card mb-3">
 								<CardBody>
 									<Row>
-										<Col md="2">
-											<div className="card-header-title fsize-2 text-capitalize font-weight-normal">
-												Workflow
-											</div>
+										<Col md="1">
+											<Label>Workflow</Label>
 										</Col>
-										<Col md="2">
-											<select
-												onChange={this.handleChange}
-												className="browser-default custom-select"
-											>
-												<option selected value="" value={nameWF}></option>
-												{this.state.Workflow.map((WF) => (
-													<option name="nameWF">{WF.name}</option>
-												))}
-											</select>
+										<Col md="3">
+											<Select
+												onChange={this.handleChangeWF}
+												options={this.state.optionsWF}
+											/>
 										</Col>
 										<Col md="1">
-											<form onSubmit={this.handleSubmit}>
-												<Button
-													className="btn-wide mb-1 mr-1"
-													size="lg"
-													color="warning"
-													outline
-												>
-													<FontAwesomeIcon icon={faAngleRight} size="1x" />
-												</Button>
-											</form>
-										</Col>
-										<Col md="2">
-											<div className="card-header-title fsize-2 text-capitalize font-weight-normal">
-												Usertask
-											</div>
-										</Col>
-										<Col md="2">
-											<select
-												onChange={this.handleChange1}
-												className="browser-default custom-select"
+											<Button
+												className="btn-wide mb-1 mr-1"
+												size="lg"
+												color="warning"
+												outline
+												onClick={this.get_UT}
 											>
-												<option selected value="" value={nameUT}></option>
-												{this.state.UserTasks.map((Usertask) => (
-													<option name="nameUT">{Usertask.name}</option>
-												))}
-											</select>
+												<FontAwesomeIcon icon={faAngleRight} size="1x" />
+											</Button>
+										</Col>
+										<Col md="1">
+											<Label>UserTask</Label>
+										</Col>
+										<Col md="3">
+											<Select
+												onChange={this.handleChangeUT}
+												options={this.state.optionsUT}
+											/>
 										</Col>
 										<Col md="1">
 											<Button
@@ -187,18 +198,28 @@ export default class Modals extends React.Component {
 												color="warning"
 												onClick={this.showPreview.bind(this)}
 											>
-												Save Form
+												Save form
 											</Button>
 										</Col>
 										<Col md="1">
 											<Button
-												className="btn-wide mb-1 mr-1"
+												class="btn-wide mb-2 mr-2 btn btn-lg"
 												size="lg"
 												outline
 												color="warning"
-												onClick={this.showPreview.bind(this)}
+												onClick={() =>
+													this.setState({
+														click: true,
+													})
+												}
 											>
-												Show Form
+												<Show_Forms
+													nameWF={this.state.nameWF}
+													id={this.state.idUT}
+													nameUT={this.state.nameUT}
+													click={this.state.click}
+												/>
+												Show form
 											</Button>
 										</Col>
 									</Row>

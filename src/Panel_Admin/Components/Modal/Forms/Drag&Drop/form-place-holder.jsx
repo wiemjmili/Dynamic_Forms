@@ -17,7 +17,6 @@ export default class PlaceHolder extends React.Component {
 			const Forms = res.data;
 			this.setState({ Forms });
 		});
-		console.log(this.state.Forms);
 	}
 	render() {
 		return (

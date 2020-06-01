@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
-import { Row, Col, Card, CardBody, CardTitle } from "reactstrap";
+import { Row, Col, Card, CardBody } from "reactstrap";
 import propertiesPanelModule from "bpmn-js-properties-panel";
 import propertiesProviderModule from "./provider/magic";
 import base_url from "../../../../../service/base_url";
@@ -10,9 +10,9 @@ import EditingTools from "./components/EditingTools";
 import BpmnModeler from "./custom-modeler";
 import "./style/app.css";
 import { xml } from "../../../Listworkflow/List/BPMN/ListWF/index";
+import { id } from "../../../Listworkflow/List/BPMN/ListWF/index";
 import xmlStr from "../../../Listworkflow/List/BPMN/New_WF/bpmn/xmlStr";
-
-let scale = 1;
+import axios from "axios";
 
 export default class BpmnBoard extends Component {
 	constructor(props) {
@@ -60,6 +60,7 @@ export default class BpmnBoard extends Component {
 	handleSave = (e) => {
 		this.bpmnModeler.saveXML({ format: true }, (err, xml) => {
 			const add_WF = base_url.add_WF();
+			console.log(xml);
 			fetch(add_WF, {
 				method: "post",
 				headers: { "Content-Type": "application/json" },
@@ -69,6 +70,30 @@ export default class BpmnBoard extends Component {
 			});
 		});
 	};
+	handleUpdateWF = (e) => {
+		this.bpmnModeler.saveXML({ format: true }, (err, xml) => {
+			const update_WF = base_url.updateWF();
+
+			fetch(update_WF, {
+				method: "post",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({
+					wfxml: xml,
+				}),
+			});
+		});
+	};
+
+	handleDeleteWF = () => {
+		if (id != "") {
+			axios({
+				method: "delete",
+				url: base_url.deleteWF() + "/" + id,
+			});
+		}
+		window.location.reload(false);
+	};
+
 	handleRedo = () => {
 		this.bpmnModeler.get("commandStack").redo();
 	};
@@ -114,18 +139,20 @@ export default class BpmnBoard extends Component {
 					<Card className="main-card mb-8">
 						<CardBody>
 							<Row>
-								<Col lg="5"></Col>
-								<Col lg="2">
+								<Col lg="2"></Col>
+								<Col lg="3">
 									<FileControls
 										onSaveFile={this.handleSaveFile}
 										onSaveImage={this.handleSaveImage}
 									/>
 								</Col>
-								<Col lg="2">
+								<Col lg="5">
 									<EditingTools
-										onSave={this.handleSave}
 										onRedo={this.handleRedo}
 										onUndo={this.handleUndo}
+										onSave={this.handleSave}
+										onUpdate={this.handleUpdateWF}
+										onDelete={this.handleDeleteWF}
 									/>
 								</Col>
 								<Col lg="2"></Col>

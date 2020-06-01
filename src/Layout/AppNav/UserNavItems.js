@@ -13,7 +13,17 @@ export const FormsNav = [
 	{
 		icon: "pe-7s-id",
 		label: "Process validation",
-		to: "#/components/validate_Process",
+		content: [
+			{
+				label: "Process to validate",
+				to: "#/components/validate_Process",
+			},
+			{
+				label: "Process validated",
+				to: "#/components/validated_Process",
+			},
+		],
+		//to: "#/components/validate_Process",
 	},
 ];
 export const ComponentsNav = [
