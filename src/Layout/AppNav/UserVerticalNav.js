@@ -3,7 +3,7 @@ import { withRouter } from "react-router-dom";
 
 import MetisMenu from "react-metismenu";
 
-import { ComponentsNav, FormsNav } from "./UserNavItems";
+import { FormsNav } from "./UserNavItems";
 
 class Nav extends Component {
 	state = {};
@@ -19,15 +19,6 @@ class Nav extends Component {
 					iconNamePrefix=""
 					classNameStateIcon="pe-7s-angle-down"
 				/>
-				<h5 className="app-sidebar__heading">UI Components</h5>
-				<MetisMenu
-					content={ComponentsNav}
-					activeLinkFromLocation
-					className="vertical-nav-menu"
-					iconNamePrefix=""
-					classNameStateIcon="pe-7s-angle-down"
-				/>
-
 			</Fragment>
 		);
 	}

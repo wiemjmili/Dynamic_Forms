@@ -56,7 +56,7 @@ class Formulaire extends Component {
 			this.state.tab.push(this.state[i]);
 		}
 
-		let add_res = base_url.addResponsebyUser();
+		let add_res = base_url.addResponse();
 		fetch(add_res, {
 			method: "post",
 			headers: { "Content-Type": "application/json" },

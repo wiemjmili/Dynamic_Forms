@@ -71,11 +71,7 @@ class App extends Component {
 							name="User Page"
 							render={(props) => <User_Panel {...props} />}
 						/>
-						<Route
-							path="/elements"
-							name="User Page"
-							render={(props) => <User_Panel {...props} />}
-						/>
+
 						<Route
 							path="/components/validate_Process"
 							name="User Page"

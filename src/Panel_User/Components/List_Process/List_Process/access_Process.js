@@ -181,7 +181,6 @@ export class Access_Process extends Component {
 																		type="date"
 																		className="form-control"
 																		required={d.required}
-																		value={this.state.date}
 																		onChange={(ev) =>
 																			this.setState({
 																				date: ev.target.value,

@@ -136,25 +136,7 @@ class Historical_Process extends Component {
 											))}
 										</Col>
 									))}
-									{Req.valide == true && (
-										<div>
-											<Col sm={2}>
-												<Button
-													className="mb-2 mr-2"
-													color="success"
-													onClick={() =>
-														this.setState({
-															idReq: Req.id,
-														})
-													}
-												>
-													Validé
-													<Show_Response idReq={this.state.idReq} />
-												</Button>
-											</Col>
-										</div>
-									)}
-									{Req.valide == false && (
+									{Req.state == "REFUSED" && (
 										<div>
 											<Col sm={2}>
 												<Button
@@ -166,7 +148,43 @@ class Historical_Process extends Component {
 														})
 													}
 												>
-													En cours
+													Refused
+													<Show_Response idReq={this.state.idReq} />
+												</Button>
+											</Col>
+										</div>
+									)}
+									{Req.valide == true && Req.state == "VALIDATED" && (
+										<div>
+											<Col sm={2}>
+												<Button
+													className="mb-2 mr-2"
+													color="success"
+													onClick={() =>
+														this.setState({
+															idReq: Req.id,
+														})
+													}
+												>
+													Validated
+													<Show_Response idReq={this.state.idReq} />
+												</Button>
+											</Col>
+										</div>
+									)}
+									{Req.valide == false && (
+										<div>
+											<Col sm={2}>
+												<Button
+													className="mb-2 mr-2"
+													color="info"
+													onClick={() =>
+														this.setState({
+															idReq: Req.id,
+														})
+													}
+												>
+													In progress
 													<Show_Response idReq={this.state.idReq} />
 												</Button>
 											</Col>

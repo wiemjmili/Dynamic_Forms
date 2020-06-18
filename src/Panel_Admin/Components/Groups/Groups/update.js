@@ -3,6 +3,12 @@ import base_url from "../../../../service/base_url";
 import { toast, Bounce } from "react-toastify";
 import { Button, FormGroup, Label, Input, Col, ModalFooter } from "reactstrap";
 import axios from "axios";
+import {
+	AvForm,
+	AvGroup,
+	AvInput,
+	AvFeedback,
+} from "availity-reactstrap-validation";
 
 export default class Update extends Component {
 	constructor(props) {
@@ -45,19 +51,24 @@ export default class Update extends Component {
 				<FormGroup row>
 					<Col sm={1}></Col>
 					<Col sm={5}>
-						<Label>
-							<b>Name group</b>
-						</Label>
-						<Input
-							type="text"
-							required
-							value={this.state.name}
-							onChange={(ev) =>
-								this.setState({
-									name: ev.target.value,
-								})
-							}
-						></Input>
+						<AvForm>
+							<AvGroup>
+								<Label for="example">Group</Label>
+								<AvInput
+									name="name"
+									required
+									value={this.state.name}
+									type="text"
+									required
+									onChange={(ev) =>
+										this.setState({
+											name: ev.target.value,
+										})
+									}
+								/>
+								<AvFeedback>This is an error!</AvFeedback>
+							</AvGroup>
+						</AvForm>
 					</Col>
 				</FormGroup>
 

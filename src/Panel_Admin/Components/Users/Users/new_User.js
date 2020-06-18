@@ -2,6 +2,12 @@ import React, { Component } from "react";
 import base_url from "../../../../service/base_url";
 import { toast, Bounce } from "react-toastify";
 import Select from "react-select";
+import {
+	AvForm,
+	AvGroup,
+	AvInput,
+	AvFeedback,
+} from "availity-reactstrap-validation";
 
 import { Button, FormGroup, Label, Input, Col, ModalFooter } from "reactstrap";
 import axios from "axios";
@@ -112,63 +118,87 @@ export default class New_user extends Component {
 				<FormGroup row>
 					<Col sm={1}></Col>
 					<Col sm={5}>
-						<Label>
-							<b>Name</b>
-						</Label>
-						<Input
-							type="text"
-							required
-							onChange={(ev) =>
-								this.setState({
-									name: ev.target.value,
-								})
-							}
-						></Input>
+						<AvForm>
+							<AvGroup>
+								<Label for="example">Name</Label>
+								<AvInput
+									name="name"
+									required
+									type="text"
+									required
+									onChange={(ev) =>
+										this.setState({
+											name: ev.target.value,
+										})
+									}
+								/>
+
+								<AvFeedback>This is an error!</AvFeedback>
+							</AvGroup>
+						</AvForm>
 					</Col>
 					<Col sm={5}>
-						<Label>
-							<b>Login</b>
-						</Label>
-						<Input
-							type="text"
-							required
-							onChange={(ev) =>
-								this.setState({
-									login: ev.target.value,
-								})
-							}
-						></Input>
+						<AvForm>
+							<AvGroup>
+								<Label for="example">Login</Label>
+								<AvInput
+									name="Login"
+									required
+									type="text"
+									required
+									onChange={(ev) =>
+										this.setState({
+											login: ev.target.value,
+										})
+									}
+								/>
+
+								<AvFeedback>This is an error!</AvFeedback>
+							</AvGroup>
+						</AvForm>
 					</Col>
 				</FormGroup>
 				<FormGroup row>
 					<Col sm={1}></Col>
 					<Col sm={5}>
-						<Label>
-							<b>Email</b>
-						</Label>
-						<Input
-							type="text"
-							required
-							onChange={(ev) =>
-								this.setState({
-									email: ev.target.value,
-								})
-							}
-						></Input>
+						<AvForm>
+							<AvGroup>
+								<Label for="example">Email</Label>
+								<AvInput
+									name="Email"
+									required
+									type="email"
+									required
+									onChange={(ev) =>
+										this.setState({
+											email: ev.target.value,
+										})
+									}
+								/>
+
+								<AvFeedback>This is an error!</AvFeedback>
+							</AvGroup>
+						</AvForm>
 					</Col>
 					<Col sm={5}>
-						<Label>
-							<b>Password</b>
-						</Label>
-						<Input
-							type="text"
-							required
-							onChange={(ev) =>
-								this.setState({
-									password: ev.target.value,
-								})
-							}
-						></Input>
+						<AvForm>
+							<AvGroup>
+								<Label for="example">Password</Label>
+								<AvInput
+									name="Password"
+									required
+									type="text"
+									required
+									onChange={(ev) =>
+										this.setState({
+											password: ev.target.value,
+										})
+									}
+								/>
+
+								<AvFeedback>This is an error!</AvFeedback>
+							</AvGroup>
+						</AvForm>
 					</Col>
 				</FormGroup>
 				<FormGroup row>

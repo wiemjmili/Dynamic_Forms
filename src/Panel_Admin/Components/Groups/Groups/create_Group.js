@@ -28,7 +28,7 @@ export default class Create_Group extends Component {
 						toggle={this.toggle}
 						className={this.props.className}
 						size="lg"
-						style={{ maxWidth: "1600px", width: "30%" }}
+						style={{ width: "40%" }}
 					>
 						<ModalHeader toggle={this.toggle}>
 							<h5>Create group</h5>

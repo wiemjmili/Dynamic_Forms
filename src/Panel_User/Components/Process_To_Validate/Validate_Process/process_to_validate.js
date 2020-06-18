@@ -3,6 +3,7 @@ import base_url from "../../../../service/base_url";
 import { Table, Label, FormGroup, Col, Button } from "reactstrap";
 import axios from "axios";
 import Validate_request from "./validate_request";
+import Reject_Request from "./reject_Request";
 
 class Validate_Process extends Component {
 	constructor(props) {
@@ -10,6 +11,8 @@ class Validate_Process extends Component {
 		this.state = {
 			Requests: [],
 			idReq: "",
+			click: false,
+			click2: false,
 		};
 	}
 	componentDidMount() {
@@ -76,11 +79,15 @@ class Validate_Process extends Component {
 												onClick={(ev) =>
 													this.setState({
 														idReq: Req.id,
+														click2: true,
 													})
 												}
 											>
 												Validate
-												<Validate_request name={this.state.idReq} />
+												<Validate_request
+													name={this.state.idReq}
+													click2={this.state.click2}
+												/>
 											</Button>
 										</Col>
 										<Col sm={1}>
@@ -89,8 +96,18 @@ class Validate_Process extends Component {
 												className="btn-wide mb-2 mr-2"
 												size="lg"
 												color="warning"
+												onClick={(ev) =>
+													this.setState({
+														idReq: Req.id,
+														click: true,
+													})
+												}
 											>
 												Reject
+												<Reject_Request
+													click={this.state.click}
+													idReq={this.state.idReq}
+												/>
 											</Button>
 										</Col>
 									</FormGroup>

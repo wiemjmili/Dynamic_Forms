@@ -68,21 +68,40 @@ class Validate_Process extends Component {
 												))}
 											</Col>
 										))}
-										<Col sm={1}>
-											<Button
-												className="btn-wide mb-2 mr-2"
-												size="lg"
-												color="success"
-												onClick={(ev) =>
-													this.setState({
-														idReq: Req.id,
-													})
-												}
-											>
-												Show_Response
-												<Show_Response idReq={this.state.idReq} />
-											</Button>
-										</Col>
+										{Req.state == "VALIDATED" && (
+											<Col sm={1}>
+												<Button
+													className="btn-wide mb-2 mr-2"
+													size="lg"
+													color="success"
+													onClick={(ev) =>
+														this.setState({
+															idReq: Req.id,
+														})
+													}
+												>
+													Validated
+													<Show_Response idReq={this.state.idReq} />
+												</Button>
+											</Col>
+										)}
+										{Req.state == "REFUSED" && (
+											<Col sm={1}>
+												<Button
+													className="btn-wide mb-2 mr-2"
+													size="lg"
+													color="danger"
+													onClick={(ev) =>
+														this.setState({
+															idReq: Req.id,
+														})
+													}
+												>
+													Refused
+													<Show_Response idReq={this.state.idReq} />
+												</Button>
+											</Col>
+										)}
 									</FormGroup>
 									<hr />
 								</div>

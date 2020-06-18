@@ -28,11 +28,13 @@ export default class Validate_request extends Component {
 	}
 
 	render() {
+		const { click2 } = this.props;
+		this.state.click2 = click2;
 		const { name } = this.props;
 		this.state.idReq = name;
 		return (
 			<div>
-				{this.state.idReq != "" && (
+				{this.state.idReq != "" && this.state.click2 == true && (
 					<Modal
 						isOpen={this.state.modal}
 						fade={false}

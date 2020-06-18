@@ -1,6 +1,12 @@
 import React, { Component } from "react";
 import base_url from "../../../../service/base_url";
 import { toast, Bounce } from "react-toastify";
+import {
+	AvForm,
+	AvGroup,
+	AvInput,
+	AvFeedback,
+} from "availity-reactstrap-validation";
 import { Button, FormGroup, Label, Input, Col, ModalFooter } from "reactstrap";
 import axios from "axios";
 
@@ -45,19 +51,24 @@ export default class Update extends Component {
 				<FormGroup row>
 					<Col sm={1}></Col>
 					<Col sm={5}>
-						<Label>
-							<b>Name role</b>
-						</Label>
-						<Input
-							type="text"
-							required
-							value={this.state.name}
-							onChange={(ev) =>
-								this.setState({
-									name: ev.target.value,
-								})
-							}
-						></Input>
+						<AvForm>
+							<AvGroup>
+								<Label for="example">Role</Label>
+								<AvInput
+									name="name"
+									value={this.state.name}
+									required
+									type="text"
+									required
+									onChange={(ev) =>
+										this.setState({
+											name: ev.target.value,
+										})
+									}
+								/>
+								<AvFeedback>This is an error!</AvFeedback>
+							</AvGroup>
+						</AvForm>
 					</Col>
 				</FormGroup>
 

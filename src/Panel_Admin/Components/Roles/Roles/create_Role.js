@@ -32,7 +32,7 @@ export default class Create_Role extends Component {
 						toggle={this.toggle}
 						className={this.props.className}
 						size="lg"
-						style={{ maxWidth: "1600px", width: "30%" }}
+						style={{ width: "40%" }}
 					>
 						<ModalHeader toggle={this.toggle}>
 							<h5>Create role</h5>

@@ -56,7 +56,7 @@ export default class Cancel_request extends Component {
 								toggle={this.toggle}
 								className={this.props.className}
 								size="lg"
-								style={{ maxWidth: "1600px", width: "50%" }}
+								style={{ width: "40%" }}
 							>
 								<ModalHeader toggle={this.toggle}>
 									<h5>Cancel request</h5>

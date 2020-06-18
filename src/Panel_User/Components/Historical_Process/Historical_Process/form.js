@@ -22,8 +22,6 @@ class Form extends Component {
 		this.state.idReq = idReq;
 		return (
 			<div>
-				<br />
-
 				{this.state.Response.map((Res) => (
 					<div>
 						{Res.idReq == idReq && (
@@ -78,7 +76,7 @@ class Form extends Component {
 								))}
 							</div>
 						)}
-						<hr />
+						<br />
 					</div>
 				))}
 			</div>

@@ -153,8 +153,13 @@ module.exports = {
 
 	/*Response*/
 
+	//reject_Request
+	reject_Request: function () {
+		return "/api/response/reject_Request";
+	},
+
 	//addResponse
-	addResponsebyUser: function () {
+	addResponse: function () {
 		return "/api/response/addResponse";
 	},
 

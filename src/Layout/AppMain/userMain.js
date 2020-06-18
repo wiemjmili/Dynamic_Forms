@@ -3,29 +3,11 @@ import React, { Suspense, lazy, Fragment } from "react";
 
 import { ToastContainer } from "react-toastify";
 
-const Elements = lazy(() => import("../../Panel_User/Elements"));
 const Components = lazy(() => import("../../Panel_User/Components"));
 
 const UserMain = () => {
 	return (
 		<Fragment>
-			{/* Elements */}
-
-			<Suspense
-				fallback={
-					<div className="loader-container">
-						<div className="loader-container-inner">
-							<h6 className="mt-3">
-								Please wait while we load all the Components
-							</h6>
-						</div>
-					</div>
-				}
-			>
-				<Route path="/elements" component={Elements} />
-			</Suspense>
-			{/* Components */}
-
 			<Suspense
 				fallback={
 					<div className="loader-container">
