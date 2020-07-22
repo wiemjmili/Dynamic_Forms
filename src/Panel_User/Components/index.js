@@ -17,6 +17,10 @@ import Validate_Process from "./Process_To_Validate/";
 
 import Validated_Process from "./Validated_Process/";
 
+// Dashboard
+
+import Dashboard from "./Dashboard/";
+
 // Layout
 
 import AppHeader from "../../Layout/AppHeader/";
@@ -56,6 +60,10 @@ const Components = ({ match }) => (
 						path={`${match.url}/validated_Process`}
 						component={Validated_Process}
 					/>
+
+					{/* Dashboard*/}
+
+					<Route path={`${match.url}/Dashboard`} component={Dashboard} />
 				</div>
 				<AppFooter />
 			</div>

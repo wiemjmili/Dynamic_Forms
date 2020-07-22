@@ -32,7 +32,8 @@ class Form extends Component {
 											<FormGroup row>
 												<Col sm={12}>
 													<h5>
-														{Res.form.data[0].content}: {Res.user.name}
+														<b>{Res.form.data[0].content}:</b>
+														{Res.user.username}
 													</h5>
 												</Col>
 											</FormGroup>

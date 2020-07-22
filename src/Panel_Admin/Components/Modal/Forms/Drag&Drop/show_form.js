@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import base_url from "../../../../../service/base_url";
-import { Table, Button } from "reactstrap";
+import { Table } from "reactstrap";
 import { CustomInput, FormGroup, Label, Input, Col } from "reactstrap";
 import { Modal, ModalHeader, ModalBody } from "reactstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
+import { toast } from "react-toastify";
 import axios from "axios";
 
 class Show_Forms extends Component {
@@ -18,29 +17,38 @@ class Show_Forms extends Component {
 			nameUT: "",
 			Forms: "",
 			idUT: "",
+			click: false,
 		};
 		this.toggle = this.toggle.bind(this);
 	}
 
+	componentDidMount() {}
+
 	componentDidUpdate() {
-		if (this.state.nameUT != "" && this.state.nameWF != "") {
-			let get_UT =
-				base_url.find_UserTask() +
-				"/" +
-				this.state.nameUT +
-				"/" +
-				this.state.nameWF;
-			axios.get(get_UT).then((res) => {
-				const idUT = res.data;
-				this.setState({ idUT });
-			});
-			let get_form = base_url.getFormbyUserTask() + "/" + this.state.idUT;
-			if (this.state.idUT != "") {
-				axios.get(get_form).then((res) => {
-					const Forms = res.data;
-					this.setState({ Forms });
+		if (this.state.click == true) {
+			if (this.state.nameUT != "" && this.state.nameWF != "") {
+				let get_UT =
+					base_url.find_UserTask() +
+					"/" +
+					this.state.nameUT +
+					"/" +
+					this.state.nameWF;
+				axios.get(get_UT).then((res) => {
+					const idUT = res.data;
+					this.setState({ idUT });
 				});
+				let get_form = base_url.getFormbyUserTask() + "/" + this.state.idUT;
+				if (this.state.idUT != "") {
+					axios.get(get_form).then((res) => {
+						const Forms = res.data;
+						this.setState({ Forms });
+					});
+				}
 			}
+		} else if (this.state.nameWF == "" && this.state.click == true) {
+			toast.error("Error ! some information was unavailable", {
+				position: toast.POSITION.TOP_LEFT,
+			});
 		}
 	}
 	toggle() {
@@ -58,6 +66,17 @@ class Show_Forms extends Component {
 		const { nameUT } = this.props;
 		this.state.nameUT = nameUT;
 		let baseClasses = "SortableItem rfb-item";
+		if (this.state.click == true) {
+			if (this.state.nameWF == "") {
+				toast.error("Error ! Select workflow and usertask", {
+					position: toast.POSITION.TOP_LEFT,
+				});
+			} else if (this.state.nameUT == "") {
+				toast.error("Error ! Select workflow and usertask", {
+					position: toast.POSITION.TOP_LEFT,
+				});
+			}
+		}
 		return (
 			<div>
 				{this.state.click == true && (

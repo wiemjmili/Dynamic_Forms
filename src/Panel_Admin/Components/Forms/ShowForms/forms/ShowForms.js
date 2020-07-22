@@ -4,6 +4,7 @@ import { Table, Button } from "reactstrap";
 import { CustomInput, FormGroup, Label, Input, Col } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
+import { toast } from "react-toastify";
 import axios from "axios";
 
 class Show_Forms extends Component {
@@ -25,13 +26,19 @@ class Show_Forms extends Component {
 	};
 
 	handleSubmit = (event) => {
-		event.preventDefault();
-		const nameWF = this.state.nameWF;
-		let url = base_url.get_Forms() + "/" + nameWF;
-		axios.get(url).then((res) => {
-			const Forms = res.data;
-			this.setState({ Forms });
-		});
+		if (this.state.nameWF != "") {
+			event.preventDefault();
+			const nameWF = this.state.nameWF;
+			let url = base_url.get_Forms() + "/" + nameWF;
+			axios.get(url).then((res) => {
+				const Forms = res.data;
+				this.setState({ Forms });
+			});
+		} else if (this.state.nameWF == "") {
+			toast.error("Error ! select workflow", {
+				position: toast.POSITION.TOP_LEFT,
+			});
+		}
 	};
 
 	render() {
@@ -64,7 +71,7 @@ class Show_Forms extends Component {
 								<form onSubmit={this.handleSubmit}>
 									<Button
 										className="btn-wide mb-1 mr-1"
-										size="lg"
+										size="xs"
 										color="secondary"
 									>
 										<FontAwesomeIcon icon={faAngleRight} size="1x" />

@@ -76,16 +76,14 @@ export default class Update extends Component {
 					<Button
 						outline
 						className="btn-wide mb-2 mr-2"
-						size="lg"
-						color="warning"
+						color="danger"
 						onClick={this.refreshPage}
 					>
 						Cancel
 					</Button>
 					<Button
 						className="btn-wide mb-2 mr-2"
-						size="lg"
-						color="warning"
+						color="success"
 						onClick={this.saveRole}
 					>
 						Save

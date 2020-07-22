@@ -60,15 +60,28 @@ export default class BpmnBoard extends Component {
 	handleSave = (e) => {
 		this.bpmnModeler.saveXML({ format: true }, (err, xml) => {
 			const add_WF = base_url.add_WF();
-			console.log(xml);
-			fetch(add_WF, {
-				method: "post",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({
-					wfxml: xml,
-				}),
-			});
+			axios
+				.post(add_WF, {
+					xml: xml,
+				})
+				.then(
+					(response) => {
+						this.toastId = toast(response.data, {
+							transition: Bounce,
+							closeButton: true,
+							autoClose: 1500,
+							position: "bottom-center",
+							type: "success",
+						});
+					},
+					(error) => {
+						toast.error(error, {
+							position: toast.POSITION.TOP_LEFT,
+						});
+					}
+				);
 		});
+		window.location.reload(false);
 	};
 	handleUpdateWF = (e) => {
 		this.bpmnModeler.saveXML({ format: true }, (err, xml) => {
@@ -78,10 +91,11 @@ export default class BpmnBoard extends Component {
 				method: "post",
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify({
-					wfxml: xml,
+					xml: xml,
 				}),
 			});
 		});
+		window.location.reload(false);
 	};
 
 	handleDeleteWF = () => {
@@ -126,6 +140,8 @@ export default class BpmnBoard extends Component {
 	handleSaveImage = () => {};
 
 	render() {
+		const { id } = this.props;
+		this.state.id = id;
 		return (
 			<Fragment>
 				<ReactCSSTransitionGroup

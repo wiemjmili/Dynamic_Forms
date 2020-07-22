@@ -1,6 +1,12 @@
 import React, { Component } from "react";
 import base_url from "../../../../service/base_url";
-import { Table, FormGroup, Button, Col, Input, Label } from "reactstrap";
+import { Table, FormGroup, Button, Col, Input } from "reactstrap";
+import {
+	UncontrolledButtonDropdown,
+	DropdownToggle,
+	DropdownMenu,
+	DropdownItem,
+} from "reactstrap";
 import axios from "axios";
 import Create_Group from "./create_Group";
 import Update_Group from "./update_Group";
@@ -12,11 +18,17 @@ class List_Groups extends Component {
 		this.state = {
 			click: false,
 			groups: [],
+			Users: [],
 			idGp: "",
+			search: "",
 		};
 		this.refresh = this.refresh.bind(this);
 	}
 	componentDidMount() {
+		axios.get(base_url.getAllUsers()).then((res) => {
+			const Users = res.data;
+			this.setState({ Users });
+		});
 		axios.get(base_url.all_Groups()).then((res) => {
 			const groups = res.data;
 			this.setState({ groups });
@@ -26,7 +38,15 @@ class List_Groups extends Component {
 	refresh() {
 		window.location.reload(false);
 	}
+	updateSearch(event) {
+		this.setState({ search: event.target.value.substr(0, 20) });
+	}
 	render() {
+		let filteredgroups = this.state.groups.filter((group) => {
+			return (
+				group.name.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1
+			);
+		});
 		return (
 			<div>
 				<Table className="mb-0">
@@ -34,9 +54,8 @@ class List_Groups extends Component {
 						<tr>
 							<Button
 								className="btn-wide mb-2 mr-2"
-								size="lg"
-								color="warning"
-								onClick={(ev) =>
+								color="info"
+								onClick={() =>
 									this.setState({
 										click: true,
 									})
@@ -48,9 +67,8 @@ class List_Groups extends Component {
 							<Button
 								outline
 								className="btn-wide mb-2 mr-2"
-								size="lg"
-								color="warning"
-								onClick={(ev) =>
+								color="info"
+								onClick={() =>
 									this.setState({
 										click1: true,
 									})
@@ -65,9 +83,8 @@ class List_Groups extends Component {
 							<Button
 								outline
 								className="btn-wide mb-2 mr-2"
-								size="lg"
-								color="warning"
-								onClick={(ev) =>
+								color="info"
+								onClick={() =>
 									this.setState({
 										click2: true,
 									})
@@ -80,18 +97,33 @@ class List_Groups extends Component {
 								Delete
 							</Button>
 						</tr>
-						<hr />
+						<br />
+						<FormGroup row>
+							<Col sm={4}>
+								<Input
+									type="text"
+									value={this.state.search}
+									onChange={this.updateSearch.bind(this)}
+									placeholder="Search"
+									aria-label="Search"
+								/>
+							</Col>
+						</FormGroup>
+						<br />
 						<div>
 							<FormGroup row>
 								<Col sm={1}></Col>
 								<Col sm={2}>
 									<b>Name</b>
 								</Col>
+								<Col sm={5}>
+									<b>Users</b>
+								</Col>
 							</FormGroup>
 							<hr />
 						</div>
 
-						{this.state.groups.map((gp, index) => (
+						{filteredgroups.map((gp) => (
 							<div>
 								<FormGroup row>
 									<Col sm={1}>
@@ -100,7 +132,7 @@ class List_Groups extends Component {
 												type="checkbox"
 												id="scales"
 												name="scales"
-												onChange={(ev) =>
+												onChange={() =>
 													this.setState({
 														idGp: gp.id,
 													})
@@ -109,7 +141,32 @@ class List_Groups extends Component {
 											<span class="checkmark"></span>
 										</label>
 									</Col>
-									<Col sm={2}>{gp.name_GP}</Col>
+									<Col sm={2}>{gp.name}</Col>
+									<Col sm={5}>
+										<UncontrolledButtonDropdown>
+											<DropdownToggle
+												caret
+												outline
+												className="mb-2 mr-2"
+												color="secondary"
+											>
+												Users
+											</DropdownToggle>
+											<DropdownMenu>
+												{this.state.Users.map((user) => (
+													<div>
+														{user.groups.map((gpUser) => (
+															<div>
+																{gpUser.id == gp.id && (
+																	<DropdownItem>{user.username}</DropdownItem>
+																)}
+															</div>
+														))}
+													</div>
+												))}
+											</DropdownMenu>
+										</UncontrolledButtonDropdown>
+									</Col>
 								</FormGroup>
 								<hr />
 							</div>

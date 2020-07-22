@@ -52,7 +52,6 @@ export default class Delete_Group extends Component {
 								fade={false}
 								toggle={this.toggle}
 								className={this.props.className}
-								size="lg"
 								style={{ maxWidth: "1600px", width: "30%" }}
 							>
 								<ModalHeader toggle={this.toggle}>
@@ -63,9 +62,8 @@ export default class Delete_Group extends Component {
 										{this.state.groups.map((gp) => (
 											<div>
 												{gp.id == idGp && (
-													<ListGroupItem color="warning">
-														Are you sure you want to delete group : {gp.name_GP}{" "}
-														?
+													<ListGroupItem color="info">
+														Are you sure you want to delete group : {gp.name} ?
 													</ListGroupItem>
 												)}
 											</div>
@@ -77,16 +75,14 @@ export default class Delete_Group extends Component {
 									<Button
 										outline
 										className="btn-wide mb-2 mr-2"
-										size="lg"
-										color="warning"
+										color="info"
 										onClick={this.refreshPage}
 									>
 										Close
 									</Button>
 									<Button
 										className="btn-wide mb-2 mr-2"
-										size="lg"
-										color="warning"
+										color="danger"
 										onClick={this.deleteGroup}
 									>
 										Delete

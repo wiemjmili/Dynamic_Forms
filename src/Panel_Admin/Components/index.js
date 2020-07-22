@@ -33,6 +33,10 @@ import Show_Forms from "./Forms/";
 
 import NewWF from "./New_WF";
 
+//Historical_process
+
+import Historical_Process from "./Historical_Process";
+
 // Layout
 
 import AppHeader from "../../Layout/AppHeader/";
@@ -77,6 +81,13 @@ const Components = ({ match }) => (
 					{/* Forms */}
 
 					<Route path={`${match.url}/show_Forms`} component={Show_Forms} />
+
+					{/* Forms */}
+
+					<Route
+						path={`${match.url}/historic_admin`}
+						component={Historical_Process}
+					/>
 				</div>
 				<AppFooter />
 			</div>

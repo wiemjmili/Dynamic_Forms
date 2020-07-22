@@ -1,9 +1,11 @@
 import React, { Fragment } from "react";
 import base_url from "../../../../../../../src/service/base_url";
-import { Table, Button } from "reactstrap";
+import { Table, FormGroup, Button, Col, Row, Input } from "reactstrap";
 import axios from "axios";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
-import { Row, Col, Card, CardBody, CardTitle } from "reactstrap";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { Card, CardBody, CardTitle } from "reactstrap";
+import BpmnBoard from "../../../../New_WF/index";
 
 export let xml = "";
 export let id = "";
@@ -14,6 +16,7 @@ export class ListWF extends React.Component {
 			Workflow: [],
 			UserTasks: [],
 			id: "",
+			search: "",
 		};
 	}
 	componentDidMount() {
@@ -30,13 +33,21 @@ export class ListWF extends React.Component {
 		let n = this.state.Workflow.length;
 		for (let i = 0; i < n; i++) {
 			if (this.state.Workflow[i].id == this.state.id) {
-				xml = this.state.Workflow[i].wfxml;
+				xml = this.state.Workflow[i].xml;
 				id = this.state.id;
 			}
 		}
 	}
 
+	updateSearch(event) {
+		this.setState({ search: event.target.value.substr(0, 20) });
+	}
 	render() {
+		let filteredWorkflow = this.state.Workflow.filter((WF) => {
+			return (
+				WF.name.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1
+			);
+		});
 		return (
 			<Fragment>
 				<ReactCSSTransitionGroup
@@ -52,6 +63,19 @@ export class ListWF extends React.Component {
 							<Card className="main-card mb-3">
 								<CardBody>
 									<CardTitle>List of workflow</CardTitle>
+									<br />
+									<FormGroup row>
+										<Col sm={4}>
+											<Input
+												type="text"
+												value={this.state.search}
+												onChange={this.updateSearch.bind(this)}
+												placeholder="Search"
+												aria-label="Search"
+											/>
+										</Col>
+									</FormGroup>
+									<br />
 									<Table className="mb-0">
 										<thead>
 											<tr>
@@ -62,7 +86,7 @@ export class ListWF extends React.Component {
 										</thead>
 
 										<tbody>
-											{this.state.Workflow.map((WF) => (
+											{filteredWorkflow.map((WF) => (
 												<tr>
 													<td>
 														<h6>
@@ -88,9 +112,7 @@ export class ListWF extends React.Component {
 													<td>
 														<Button
 															className="mb-2 mr-2 btn-transition"
-															size="lg"
 															outline
-															color="warning"
 															onClick={() =>
 																this.setState({
 																	id: WF.id,

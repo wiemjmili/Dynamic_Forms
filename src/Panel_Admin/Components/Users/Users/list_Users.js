@@ -20,6 +20,7 @@ class List_Users extends Component {
 			Users: [],
 			click: false,
 			id: "",
+			search: "",
 		};
 		this.refresh = this.refresh.bind(this);
 	}
@@ -33,7 +34,16 @@ class List_Users extends Component {
 	refresh() {
 		window.location.reload(false);
 	}
+	updateSearch(event) {
+		this.setState({ search: event.target.value.substr(0, 20) });
+	}
 	render() {
+		let filteredUsers = this.state.Users.filter((user) => {
+			return (
+				user.username.toLowerCase().indexOf(this.state.search.toLowerCase()) !==
+				-1
+			);
+		});
 		return (
 			<div>
 				<Table className="mb-0">
@@ -41,8 +51,7 @@ class List_Users extends Component {
 						<tr>
 							<Button
 								className="btn-wide mb-2 mr-2"
-								size="lg"
-								color="warning"
+								color="info"
 								onClick={() =>
 									this.setState({
 										click: true,
@@ -55,8 +64,7 @@ class List_Users extends Component {
 							<Button
 								outline
 								className="btn-wide mb-2 mr-2"
-								size="lg"
-								color="warning"
+								color="info"
 								onClick={() =>
 									this.setState({
 										click1: true,
@@ -69,8 +77,7 @@ class List_Users extends Component {
 							<Button
 								outline
 								className="btn-wide mb-2 mr-2"
-								size="lg"
-								color="warning"
+								color="info"
 								onClick={() =>
 									this.setState({
 										click2: true,
@@ -81,20 +88,29 @@ class List_Users extends Component {
 								Delete
 							</Button>
 						</tr>
-						<hr />
+						<br />
+						<FormGroup row>
+							<Col sm={4}>
+								<Input
+									type="text"
+									value={this.state.search}
+									onChange={this.updateSearch.bind(this)}
+									placeholder="Search"
+									aria-label="Search"
+								/>
+							</Col>
+						</FormGroup>
+						<br />
 						<div>
 							<FormGroup row>
 								<Col sm={1}></Col>
 								<Col sm={2}>
-									<b>Name</b>
+									<b>Username</b>
 								</Col>
-
 								<Col sm={2}>
 									<b>Email</b>
 								</Col>
-								<Col sm={2}>
-									<b>Password</b>
-								</Col>
+
 								<Col sm={1}>
 									<b>Roles</b>
 								</Col>
@@ -104,7 +120,7 @@ class List_Users extends Component {
 							</FormGroup>
 							<hr />
 						</div>
-						{this.state.Users.map((user) => (
+						{filteredUsers.map((user) => (
 							<div>
 								<FormGroup row>
 									<Col sm={1}>
@@ -123,18 +139,18 @@ class List_Users extends Component {
 										</label>
 									</Col>
 
-									<Col sm={2}>{user.name}</Col>
+									<Col sm={2}>{user.username}</Col>
 									<Col sm={2}>{user.email}</Col>
-									<Col sm={2}>{user.password}</Col>
+
 									<Col sm={1}>
 										<UncontrolledButtonDropdown>
-											{user.roles != "" && (
+											{user.roles.length != 0 && (
 												<div>
 													<DropdownToggle
 														caret
 														outline
 														className="mb-2 mr-2"
-														color="primary"
+														color="secondary"
 													>
 														{user.roles[0].name}
 													</DropdownToggle>
@@ -150,20 +166,20 @@ class List_Users extends Component {
 									</Col>
 									<Col sm={2}>
 										<UncontrolledButtonDropdown>
-											{user.groups != "" && (
+											{user.groups.length != 0 && (
 												<div>
 													<DropdownToggle
 														caret
 														outline
 														className="mb-2 mr-2"
-														color="primary"
+														color="secondary"
 													>
-														{user.groups[0].name_GP}
+														{user.groups[0].name}
 													</DropdownToggle>
 
 													<DropdownMenu>
 														{user.groups.map((gp) => (
-															<DropdownItem>{gp.name_GP}</DropdownItem>
+															<DropdownItem>{gp.name}</DropdownItem>
 														))}
 													</DropdownMenu>
 												</div>

@@ -12,7 +12,6 @@ class Form_user extends Component {
 		};
 	}
 	componentDidMount() {
-		console.log(this.state.idReq);
 		axios.get(base_url.getALLRequest()).then((res) => {
 			const Requests = res.data;
 			this.setState({ Requests });
@@ -39,7 +38,10 @@ class Form_user extends Component {
 										<tr>
 											<FormGroup row>
 												<Col sm={3}>
-													<h5>User : {Req.user.name}</h5>
+													<h5>
+														<b>User : </b>
+														{Req.user.username}
+													</h5>
 												</Col>
 											</FormGroup>
 										</tr>

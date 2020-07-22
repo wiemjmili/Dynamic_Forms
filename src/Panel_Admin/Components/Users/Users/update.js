@@ -33,8 +33,7 @@ export default class Update extends Component {
 		axios.get(base_url.getUser_Byid() + "/" + this.state.id).then((res) => {
 			const user = res.data;
 			this.setState({ user });
-			this.state.name = user.name;
-			this.state.login = user.login;
+			this.state.username = user.username;
 			this.state.email = user.email;
 			this.state.password = user.password;
 			this.state.tab_gU = user.groups;
@@ -48,8 +47,8 @@ export default class Update extends Component {
 			let options = [];
 			for (let i = 0; i < n; i++) {
 				let gp = {
-					value: this.state.groups[i].name_GP,
-					label: this.state.groups[i].name_GP,
+					value: this.state.groups[i].name,
+					label: this.state.groups[i].name,
 				};
 				options.push(gp);
 			}
@@ -86,7 +85,7 @@ export default class Update extends Component {
 			for (let i = 0; i < n1; i++) {
 				for (let j = 0; j < n_Gp; j++) {
 					if (
-						this.state.groups[j].name_GP == this.state.selectedOptionGP[i].label
+						this.state.groups[j].name == this.state.selectedOptionGP[i].label
 					) {
 						this.state.tabGp.push(this.state.groups[j]);
 					}
@@ -114,8 +113,7 @@ export default class Update extends Component {
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify({
 				id: this.state.id,
-				name: this.state.name,
-				login: this.state.login,
+				username: this.state.username,
 				email: this.state.email,
 				password: this.state.password,
 				roles: this.state.tabR,
@@ -137,40 +135,20 @@ export default class Update extends Component {
 				<div>
 					<FormGroup row>
 						<Col sm={1}></Col>
-						<Col sm={5}>
-							<AvForm>
-								<AvGroup>
-									<Label for="example">Name</Label>
-									<AvInput
-										name="name"
-										value={this.state.name}
-										required
-										type="text"
-										required
-										onChange={(ev) =>
-											this.setState({
-												name: ev.target.value,
-											})
-										}
-									/>
 
-									<AvFeedback>This is an error!</AvFeedback>
-								</AvGroup>
-							</AvForm>
-						</Col>
 						<Col sm={5}>
 							<AvForm>
 								<AvGroup>
-									<Label for="example">Login</Label>
+									<Label for="example">Username</Label>
 									<AvInput
-										name="Login"
+										name="Username"
 										required
-										value={this.state.login}
+										value={this.state.username}
 										type="text"
 										required
 										onChange={(ev) =>
 											this.setState({
-												login: ev.target.value,
+												username: ev.target.value,
 											})
 										}
 									/>
@@ -259,16 +237,14 @@ export default class Update extends Component {
 					<Button
 						outline
 						className="btn-wide mb-2 mr-2"
-						size="lg"
-						color="warning"
+						color="danger"
 						onClick={this.refreshPage}
 					>
 						Close
 					</Button>
 					<Button
 						className="btn-wide mb-2 mr-2"
-						size="lg"
-						color="warning"
+						color="success"
 						onClick={this.saveUser}
 					>
 						Save

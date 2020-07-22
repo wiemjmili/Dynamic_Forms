@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import base_url from "../../../../service/base_url";
-import { Table, Label, FormGroup, Col, Button } from "reactstrap";
+import { Table, Label, FormGroup, Col, Button, Input } from "reactstrap";
 import axios from "axios";
 import Validate_request from "./validate_request";
 import Reject_Request from "./reject_Request";
@@ -13,6 +13,7 @@ class Validate_Process extends Component {
 			idReq: "",
 			click: false,
 			click2: false,
+			search: "",
 		};
 	}
 	componentDidMount() {
@@ -21,12 +22,35 @@ class Validate_Process extends Component {
 			this.setState({ Requests });
 		});
 	}
+	updateSearch(event) {
+		this.setState({ search: event.target.value.substr(0, 20) });
+	}
+
 	render() {
+		let filteredRequest = this.state.Requests.filter((req) => {
+			return (
+				req.form.data[0].content
+					.toLowerCase()
+					.indexOf(this.state.search.toLowerCase()) !== -1
+			);
+		});
 		return (
 			<div>
+				<FormGroup row>
+					<Col sm={4}>
+						<Input
+							type="text"
+							value={this.state.search}
+							onChange={this.updateSearch.bind(this)}
+							placeholder="Search"
+							aria-label="Search"
+						/>
+					</Col>
+				</FormGroup>
+				<br />
 				<Table className="mb-0">
 					<tbody>
-						{this.state.Requests.map((Req) => (
+						{filteredRequest.map((Req) => (
 							<div>
 								<div>
 									<FormGroup row>
@@ -54,7 +78,10 @@ class Validate_Process extends Component {
 									</FormGroup>
 									<FormGroup row>
 										<Col sm={3}>
-											<h5>User : {Req.user.name}</h5>
+											<h5>
+												<b>User : </b>
+												{Req.user.username}
+											</h5>
 										</Col>
 										{Req.request.map((element) => (
 											<Col sm={2}>
@@ -74,8 +101,7 @@ class Validate_Process extends Component {
 										<Col sm={1}>
 											<Button
 												className="btn-wide mb-2 mr-2"
-												size="lg"
-												color="warning"
+												color="success"
 												onClick={(ev) =>
 													this.setState({
 														idReq: Req.id,
@@ -92,10 +118,8 @@ class Validate_Process extends Component {
 										</Col>
 										<Col sm={1}>
 											<Button
-												outline
 												className="btn-wide mb-2 mr-2"
-												size="lg"
-												color="warning"
+												color="danger"
 												onClick={(ev) =>
 													this.setState({
 														idReq: Req.id,

@@ -36,6 +36,7 @@ export default class Show_Response extends Component {
 							</div>
 						</ModalHeader>
 						<ModalBody>
+							<hr />
 							<Form_User idReq={idReq} />
 							<hr />
 							<Form idReq={idReq} />

@@ -24,7 +24,7 @@ class Validate_Proc extends React.Component {
 							<Card className="main-card mb-3">
 								<CardBody>
 									<CardTitle className="text-center">
-										<h3>Validate Requests</h3>
+										<h3>Validated Requests</h3>
 									</CardTitle>
 									<br />
 									<br />

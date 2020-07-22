@@ -15,6 +15,8 @@ class Historical_Process extends Component {
 			Requests: [],
 			click: false,
 			click2: false,
+			search: "",
+			Requests_Inverse: [],
 		};
 		this.refresh = this.refresh.bind(this);
 	}
@@ -22,13 +24,27 @@ class Historical_Process extends Component {
 		axios.get(base_url.getRequestByUser()).then((res) => {
 			const Requests = res.data;
 			this.setState({ Requests });
+			this.state.Requests_Inverse = Requests.reverse();
 		});
 	}
 
 	refresh() {
 		window.location.reload(false);
 	}
+
+	updateSearch(event) {
+		this.setState({ search: event.target.value.substr(0, 20) });
+	}
+
 	render() {
+		let filteredRequest = this.state.Requests.filter((req) => {
+			return (
+				req.form.data[0].content
+					.toLowerCase()
+					.indexOf(this.state.search.toLowerCase()) !== -1
+			);
+		});
+
 		return (
 			<div>
 				<Table className="mb-0">
@@ -36,8 +52,7 @@ class Historical_Process extends Component {
 						<tr>
 							<Button
 								className="btn-wide mb-2 mr-2"
-								size="lg"
-								color="warning"
+								color="info"
 								onClick={() =>
 									this.setState({
 										click: true,
@@ -50,8 +65,7 @@ class Historical_Process extends Component {
 							<Button
 								outline
 								className="btn-wide mb-2 mr-2"
-								size="lg"
-								color="warning"
+								color="info"
 								onClick={() =>
 									this.setState({
 										click2: true,
@@ -64,8 +78,7 @@ class Historical_Process extends Component {
 							<Button
 								outline
 								className="btn-wide mb-2 mr-2"
-								size="lg"
-								color="warning"
+								color="info"
 								onClick={this.refresh}
 							>
 								Refresh
@@ -73,10 +86,22 @@ class Historical_Process extends Component {
 							<br />
 							<br />
 							<br />
-							<br />
 						</tr>
+						<FormGroup row>
+							<Col sm={4}>
+								<Input
+									type="text"
+									value={this.state.search}
+									onChange={this.updateSearch.bind(this)}
+									placeholder="Search"
+									aria-label="Search"
+								/>
+							</Col>
+						</FormGroup>
 
-						{this.state.Requests.map((Req) => (
+						<br />
+
+						{filteredRequest.map((Req) => (
 							<div>
 								<FormGroup row>
 									<Col sm={1}>

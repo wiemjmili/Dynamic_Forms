@@ -27,7 +27,6 @@ export default class Create_Group extends Component {
 						fade={false}
 						toggle={this.toggle}
 						className={this.props.className}
-						size="lg"
 						style={{ width: "40%" }}
 					>
 						<ModalHeader toggle={this.toggle}>

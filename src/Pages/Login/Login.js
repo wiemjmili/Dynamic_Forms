@@ -23,7 +23,7 @@ class Login extends Component {
 		super(props);
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.state = {
-			email: "",
+			username: "",
 			password: "",
 			verif: "",
 		};
@@ -34,7 +34,7 @@ class Login extends Component {
 			.get(
 				base_url.check_User() +
 					"/" +
-					this.state.email +
+					this.state.username +
 					"/" +
 					this.state.password
 			)
@@ -42,16 +42,16 @@ class Login extends Component {
 				const verif = res.data;
 				this.setState({ verif });
 			})
-			.then((response) => {
+			.then(() => {
 				if (this.state.verif === "admin") {
 					this.props.history.replace("/components/list_WF");
 				} else if (this.state.verif === "True") {
-					this.props.history.replace("/components/list_Process");
+					this.props.history.replace("/components/Dashboard");
 				} else if (this.state.verif === "False") {
 					Swal.fire({
 						position: "top-center",
 						type: "error",
-						title: "Email or Password are incorrect !",
+						title: "Username or Password are incorrect !",
 						showConfirmButton: false,
 						timer: 1500,
 					});
@@ -97,13 +97,13 @@ class Login extends Component {
 												<Input
 													type="text"
 													required
-													placeholder="Email"
+													placeholder="Username"
 													onChange={(ev) =>
 														this.setState({
-															email: ev.target.value,
+															username: ev.target.value,
 														})
 													}
-													autoComplete="email"
+													autoComplete="username"
 												/>
 											</InputGroup>
 											<InputGroup className="mb-4">

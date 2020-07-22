@@ -88,39 +88,62 @@ export default class Modals extends React.Component {
 	};
 
 	showPreview() {
-		let add_Form = base_url.add_Form();
-		if (this.state.data.length != 0 && this.state.idUT != "") {
-			fetch(add_Form, {
-				method: "post",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({
-					data: this.state.data,
-					idUT: this.state.idUT,
-				}),
-			});
-
-			this.toastId = toast(
-				"Form successfully added to usertask " +
-					"' " +
-					this.state.nameUT +
-					" '",
-				{
-					transition: Bounce,
-					closeButton: true,
-					autoClose: 5000,
-					position: "bottom-center",
-					type: "success",
-				}
-			);
-		} else {
-			toast.error("Error ! some information was unavailable", {
-				position: toast.POSITION.TOP_LEFT,
-			});
-		}
 		this.setState({
 			previewVisible: true,
 		});
-		//window.location.reload(false);
+
+		let find = false;
+		let i = 0;
+		let n = this.state.Forms.length;
+		while (i < n && find == false) {
+			if (this.state.Forms[i].idUT == this.state.idUT) {
+				find = true;
+			} else i++;
+		}
+
+		if (find == false) {
+			let add_Form = base_url.add_Form();
+			if (this.state.data.length != 0 && this.state.idUT != "") {
+				axios
+					.post(add_Form, {
+						data: this.state.data,
+						idUT: this.state.idUT,
+					})
+					.then(
+						(response) => {
+							if (response.data != "exist") {
+								this.toastId = toast(response.data + " " + this.state.nameUT, {
+									transition: Bounce,
+									closeButton: true,
+									autoClose: 1500,
+									position: "bottom-center",
+									type: "success",
+								});
+							} else if (response.data == "exist") {
+								toast.error(
+									"Existing form for this usertask" + " " + this.state.nameUT,
+									{
+										position: toast.POSITION.TOP_LEFT,
+									}
+								);
+							}
+						},
+						(error) => {
+							toast.error(error, {
+								position: toast.POSITION.TOP_LEFT,
+							});
+						}
+					);
+			} else {
+				toast.error("Error ! some information was unavailable", {
+					position: toast.POSITION.TOP_LEFT,
+				});
+			}
+		} else {
+			toast.error("Error ! existing form for this usertask", {
+				position: toast.POSITION.TOP_LEFT,
+			});
+		}
 	}
 
 	_onChange(data) {
@@ -175,7 +198,6 @@ export default class Modals extends React.Component {
 											<Button
 												className="btn-wide mb-1 mr-1"
 												size="lg"
-												color="warning"
 												outline
 												onClick={this.get_UT}
 											>
@@ -194,8 +216,7 @@ export default class Modals extends React.Component {
 										<Col md="1">
 											<Button
 												className="btn-wide mb-1 mr-1"
-												size="lg"
-												color="warning"
+												color="success"
 												onClick={this.showPreview.bind(this)}
 											>
 												Save form
@@ -204,9 +225,8 @@ export default class Modals extends React.Component {
 										<Col md="1">
 											<Button
 												class="btn-wide mb-2 mr-2 btn btn-lg"
-												size="lg"
 												outline
-												color="warning"
+												color="success"
 												onClick={() =>
 													this.setState({
 														click: true,

@@ -12,11 +12,11 @@ import DynamicOptionList from "./dynamic-option-list";
 import { get } from "../../Forms/stores/requests";
 
 const toolbar = {
-	options: ["inline", "list", "textAlign", "fontSize", "link", "history"],
+	options: ["inline", "list", "textAlign", "fontSize", "history"],
 	inline: {
 		inDropdown: false,
 		className: undefined,
-		options: ["bold", "italic", "underline", "superscript", "subscript"],
+		options: ["bold", "italic", "underline"],
 	},
 };
 

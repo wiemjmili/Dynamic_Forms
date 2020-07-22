@@ -139,7 +139,7 @@ export default class Toolbar extends React.Component {
 				field_name: "tags_",
 				options: [],
 			},
-			{
+			/*	{
 				key: "Checkboxes",
 				canHaveAnswer: true,
 				name: "Checkboxes",
@@ -148,7 +148,7 @@ export default class Toolbar extends React.Component {
 				field_name: "checkboxes_",
 				options: [],
 			},
-			{
+			/*{
 				key: "RadioButtons",
 				canHaveAnswer: true,
 				name: "Multiple Choice",
@@ -156,7 +156,7 @@ export default class Toolbar extends React.Component {
 				label: "Placeholder Label",
 				field_name: "radiobuttons_",
 				options: [],
-			},
+			},*/
 			{
 				key: "TextInput",
 				name: "Text Input",
@@ -326,7 +326,9 @@ export default class Toolbar extends React.Component {
 				<br />
 				<br />
 				<div className="react-form-builder-toolbar pull-right">
-					<h4>Toolbox</h4>
+					<h4>
+						<b>Toolbox</b>
+					</h4>
 					<ul>
 						{this.state.items.map((item) => (
 							<ToolbarItem

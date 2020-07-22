@@ -1,6 +1,3 @@
-/**
- * <Preview />
- */
 import React from "react";
 import update from "immutability-helper";
 import store from "../../Forms/stores/store";

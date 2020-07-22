@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { HashRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Link } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const loading = () => (
 	<div className="loader-container">
@@ -41,6 +43,7 @@ class App extends Component {
 							render={(props) => <Admin_Panel {...props} />}
 						/>
 						<Route
+							exact
 							path="/components/list_WF"
 							name="Admin Page"
 							render={(props) => <Admin_Panel {...props} />}
@@ -65,7 +68,11 @@ class App extends Component {
 							name="Admin Page"
 							render={(props) => <Admin_Panel {...props} />}
 						/>
-
+						<Route
+							path="/components/historic_admin"
+							name="Admin Page"
+							render={(props) => <Admin_Panel {...props} />}
+						/>
 						<Route
 							path="/components/list_Process"
 							name="User Page"
@@ -84,6 +91,12 @@ class App extends Component {
 						/>
 						<Route
 							path="/components/historical_Process"
+							name="User Page"
+							render={(props) => <User_Panel {...props} />}
+						/>
+
+						<Route
+							path="/components/Dashboard"
 							name="User Page"
 							render={(props) => <User_Panel {...props} />}
 						/>

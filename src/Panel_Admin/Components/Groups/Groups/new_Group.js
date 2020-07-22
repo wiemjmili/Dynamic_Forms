@@ -24,11 +24,10 @@ export default class New_Group extends Component {
 			method: "post",
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify({
-				name_GP: this.state.name,
+				name: this.state.name,
 			}),
-		})
-			.then((res) => res.text())
-			.then((res) => console.log(res));
+		}).then((res) => res.text());
+
 		window.location.reload(false);
 	}
 
@@ -66,16 +65,14 @@ export default class New_Group extends Component {
 					<Button
 						outline
 						className="btn-wide mb-2 mr-2"
-						size="lg"
-						color="warning"
+						color="danger"
 						onClick={this.refreshPage}
 					>
 						Cancel
 					</Button>
 					<Button
 						className="btn-wide mb-2 mr-2"
-						size="lg"
-						color="warning"
+						color="success"
 						onClick={this.saveGroup}
 					>
 						Save

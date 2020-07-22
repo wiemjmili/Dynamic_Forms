@@ -116,11 +116,7 @@ export default class New_Request extends Component {
 							</td>
 							<td>
 								<form onSubmit={this.handleSubmit}>
-									<Button
-										size="lg"
-										color="secondary"
-										className="btn-wide mb-2 mr-2"
-									>
+									<Button color="secondary" className="btn-wide mb-2 mr-2">
 										<FontAwesomeIcon icon={faAngleRight} size="1x" />
 									</Button>
 								</form>

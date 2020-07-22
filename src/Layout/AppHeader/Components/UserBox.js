@@ -17,7 +17,13 @@ import { faCalendarAlt, faAngleDown } from "@fortawesome/free-solid-svg-icons";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import avatar1 from "../../../assets/utils/images/avatars/1.png";
+import admin_img from "../../../assets/utils/images/avatars/Admin.png";
+
+import user_img from "../../../assets/utils/images/avatars/user.png";
+
+import base_url from "../../../service/base_url";
+
+import axios from "axios";
 
 const propTypes = {
 	children: PropTypes.node,
@@ -30,8 +36,13 @@ class UserBox extends React.Component {
 		this.state = {
 			active: false,
 			navigate: false,
+			User: "",
 		};
 		this.signOut = this.signOut.bind(this);
+		axios.get(base_url.getCurrentUser()).then((res) => {
+			const User = res.data;
+			this.setState({ User });
+		});
 	}
 
 	notify2 = () =>
@@ -57,12 +68,22 @@ class UserBox extends React.Component {
 							<div className="widget-content-left">
 								<UncontrolledButtonDropdown>
 									<DropdownToggle color="link" className="p-0">
-										<img
-											width={36}
-											className="rounded-circle"
-											src={avatar1}
-											alt=""
-										/>
+										{this.state.User.username == "Admin" && (
+											<img
+												width={36}
+												className="rounded-circle"
+												src={admin_img}
+												alt=""
+											/>
+										)}
+										{this.state.User.username != "Admin" && (
+											<img
+												width={36}
+												className="rounded-circle"
+												src={user_img}
+												alt=""
+											/>
+										)}
 										<FontAwesomeIcon
 											className="ml-2 opacity-8"
 											icon={faAngleDown}
@@ -91,7 +112,7 @@ class UserBox extends React.Component {
 								</UncontrolledButtonDropdown>
 							</div>
 							<div className="widget-content-left  ml-3 header-user-info">
-								<div className="widget-heading">Admin</div>
+								<div className="widget-heading">{this.state.User.username}</div>
 								<div className="widget-subheading">Business&Decision</div>
 							</div>
 						</div>

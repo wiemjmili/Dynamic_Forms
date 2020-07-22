@@ -58,7 +58,7 @@ export default class Reject_Request extends Component {
 							<ModalBody>
 								<ListGroup>
 									<div>
-										<ListGroupItem color="warning">
+										<ListGroupItem color="danger">
 											Are you sure you want to reject this request ?
 										</ListGroupItem>
 									</div>
@@ -69,16 +69,14 @@ export default class Reject_Request extends Component {
 								<Button
 									outline
 									className="btn-wide mb-2 mr-2"
-									size="lg"
-									color="warning"
+									color="success"
 									onClick={this.refreshPage}
 								>
 									Close
 								</Button>
 								<Button
 									className="btn-wide mb-2 mr-2"
-									size="lg"
-									color="warning"
+									color="danger"
 									onClick={this.reject_Request}
 								>
 									Reject

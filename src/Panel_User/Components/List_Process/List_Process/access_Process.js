@@ -57,7 +57,6 @@ export class Access_Process extends Component {
 		axios.get(url).then((res) => {
 			const Forms = res.data;
 			this.setState({ Forms });
-			console.log(this.state.Forms.length);
 		});
 	};
 	sendRequest(event) {
@@ -67,24 +66,29 @@ export class Access_Process extends Component {
 			this.state.tab.push(this.state[i]);
 		}
 		let add_request = base_url.addRequestbyUser();
-		fetch(add_request, {
-			method: "post",
-			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify({
+
+		axios
+			.post(add_request, {
 				request: this.state.tab,
 				form: this.state.Forms[0],
-			}),
-		});
-		this.toastId = toast(
-			"Request successfully added " + "'" + this.state.nameWF + "'",
-			{
-				transition: Bounce,
-				closeButton: true,
-				autoClose: 5000,
-				position: "bottom-center",
-				type: "success",
-			}
-		);
+			})
+			.then(
+				(response) => {
+					this.toastId = toast(response.data, {
+						transition: Bounce,
+						closeButton: true,
+						autoClose: 1500,
+						position: "bottom-center",
+						type: "success",
+					});
+				},
+				(error) => {
+					toast.error(error, {
+						position: toast.POSITION.TOP_LEFT,
+					});
+				}
+			);
+
 		window.location.reload(false);
 	}
 	refreshPage() {
@@ -93,6 +97,7 @@ export class Access_Process extends Component {
 
 	render() {
 		const { nameWF } = this.state;
+		let baseClasses = "SortableItem rfb-item";
 		return (
 			<div>
 				<Table className="mb-0">
@@ -118,11 +123,7 @@ export class Access_Process extends Component {
 							</td>
 							<td>
 								<form onSubmit={this.handleSubmit}>
-									<Button
-										size="lg"
-										color="secondary"
-										className="btn-wide mb-2 mr-2"
-									>
+									<Button color="secondary" className="btn-wide mb-2 mr-2">
 										<FontAwesomeIcon icon={faAngleRight} size="1x" />
 									</Button>
 								</form>
@@ -140,7 +141,7 @@ export class Access_Process extends Component {
 								<Table className="mb-0">
 									<tbody>
 										<tr>
-											{F.data.map((d, index, index2) => (
+											{F.data.map((d, index) => (
 												<div>
 													<div>
 														{d.element == "Header" && (
@@ -183,8 +184,7 @@ export class Access_Process extends Component {
 																		required={d.required}
 																		onChange={(ev) =>
 																			this.setState({
-																				date: ev.target.value,
-																				[index]: [d.id, date],
+																				[index]: [d.id, ev.target.value],
 																			})
 																		}
 																	/>

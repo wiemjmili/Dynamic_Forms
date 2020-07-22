@@ -3,7 +3,7 @@ import { withRouter } from "react-router-dom";
 
 import MetisMenu from "react-metismenu";
 
-import { Security, workflow, Forms } from "./NavItems";
+import { Security, workflow, Forms, Requests } from "./NavItems";
 
 class Nav extends Component {
 	state = {};
@@ -31,6 +31,15 @@ class Nav extends Component {
 				<h5 className="app-sidebar__heading">Security</h5>
 				<MetisMenu
 					content={Security}
+					activeLinkFromLocation
+					className="vertical-nav-menu"
+					iconNamePrefix=""
+					classNameStateIcon="pe-7s-angle-down"
+				/>
+
+				<h5 className="app-sidebar__heading">Requests</h5>
+				<MetisMenu
+					content={Requests}
 					activeLinkFromLocation
 					className="vertical-nav-menu"
 					iconNamePrefix=""

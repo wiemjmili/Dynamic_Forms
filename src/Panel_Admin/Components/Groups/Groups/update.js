@@ -22,7 +22,7 @@ export default class Update extends Component {
 	componentDidMount() {
 		axios.get(base_url.getGroup_Byid() + "/" + this.state.idGp).then((res) => {
 			const group = res.data;
-			this.state.name = group.name_GP;
+			this.state.name = group.name;
 			this.setState({ group });
 		});
 	}
@@ -35,7 +35,7 @@ export default class Update extends Component {
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify({
 				id: this.state.idGp,
-				name_GP: this.state.name,
+				name: this.state.name,
 			}),
 		});
 		window.location.reload(false);
@@ -76,16 +76,14 @@ export default class Update extends Component {
 					<Button
 						outline
 						className="btn-wide mb-2 mr-2"
-						size="lg"
-						color="warning"
+						color="danger"
 						onClick={this.refreshPage}
 					>
 						Cancel
 					</Button>
 					<Button
 						className="btn-wide mb-2 mr-2"
-						size="lg"
-						color="warning"
+						color="success"
 						onClick={this.saveGroup}
 					>
 						Save

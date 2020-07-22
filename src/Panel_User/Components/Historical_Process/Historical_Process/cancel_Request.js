@@ -66,7 +66,7 @@ export default class Cancel_request extends Component {
 										{this.state.Requests.map((req) => (
 											<div>
 												{req.id == id && (
-													<ListGroupItem color="warning">
+													<ListGroupItem color="info">
 														Are you sure to cancel this request
 													</ListGroupItem>
 												)}
@@ -78,16 +78,14 @@ export default class Cancel_request extends Component {
 									<Button
 										outline
 										className="btn-wide mb-2 mr-2"
-										size="lg"
-										color="warning"
+										color="danger"
 										onClick={this.refreshPage}
 									>
 										Close
 									</Button>
 									<Button
 										className="btn-wide mb-2 mr-2"
-										size="lg"
-										color="warning"
+										color="success"
 										onClick={this.cancel_request}
 									>
 										Send

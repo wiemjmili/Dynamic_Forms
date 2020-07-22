@@ -20,5 +20,3 @@ ReactDOM.render(
 registerServiceWorker();
 
 unregister();
-
-// registerServiceWorker();

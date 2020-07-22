@@ -63,8 +63,9 @@ export default class Delete_User extends Component {
 										{this.state.Users.map((user) => (
 											<div>
 												{user.id == id && (
-													<ListGroupItem color="warning">
-														Are you sure you want to delete user {user.name}?
+													<ListGroupItem color="danger">
+														Are you sure you want to delete user {user.username}
+														?
 													</ListGroupItem>
 												)}
 											</div>
@@ -76,16 +77,14 @@ export default class Delete_User extends Component {
 									<Button
 										outline
 										className="btn-wide mb-2 mr-2"
-										size="lg"
-										color="warning"
+										color="success"
 										onClick={this.refreshPage}
 									>
 										Cancel
 									</Button>
 									<Button
 										className="btn-wide mb-2 mr-2"
-										size="lg"
-										color="warning"
+										color="danger"
 										onClick={this.deleteGroup}
 									>
 										Delete

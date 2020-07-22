@@ -58,20 +58,34 @@ export default class BpmnBoard extends Component {
 			}
 		});
 	};
-	handleSave = (e) => {
+	handleSave = () => {
 		this.bpmnModeler.saveXML({ format: true }, (err, xml) => {
 			const add_WF = base_url.add_WF();
-			console.log(xml);
-			fetch(add_WF, {
-				method: "post",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({
-					wfxml: xml,
-				}),
-			});
+
+			axios
+				.post(add_WF, {
+					xml: xml,
+				})
+				.then(
+					(response) => {
+						this.toastId = toast(response.data, {
+							transition: Bounce,
+							closeButton: true,
+							autoClose: 1500,
+							position: "bottom-center",
+							type: "success",
+						});
+					},
+					(error) => {
+						toast.error(error, {
+							position: toast.POSITION.TOP_LEFT,
+						});
+					}
+				);
 		});
+		window.location.reload(false);
 	};
-	handleUpdateWF = (e) => {
+	handleUpdateWF = () => {
 		this.bpmnModeler.saveXML({ format: true }, (err, xml) => {
 			const update_WF = base_url.updateWF();
 
@@ -79,10 +93,11 @@ export default class BpmnBoard extends Component {
 				method: "post",
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify({
-					wfxml: xml,
+					xml: xml,
 				}),
 			});
 		});
+		window.location.reload(false);
 	};
 
 	handleDeleteWF = () => {

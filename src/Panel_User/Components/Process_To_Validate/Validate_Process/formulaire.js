@@ -29,7 +29,6 @@ class Formulaire extends Component {
 		this.cancel = this.cancel.bind(this);
 	}
 	componentDidMount() {
-		console.log(this.state.idUT);
 		axios.get(base_url.all_UserTasks()).then((res) => {
 			const Usertasks = res.data;
 			this.setState({ Usertasks });
@@ -55,17 +54,30 @@ class Formulaire extends Component {
 		for (let i = 1; i < n2; i++) {
 			this.state.tab.push(this.state[i]);
 		}
-
 		let add_res = base_url.addResponse();
-		fetch(add_res, {
-			method: "post",
-			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify({
+		axios
+			.post(add_res, {
 				response: this.state.tab,
 				form: this.state.Form,
 				idReq: this.state.idReq,
-			}),
-		});
+			})
+			.then(
+				(response) => {
+					this.toastId = toast(response.data, {
+						transition: Bounce,
+						closeButton: true,
+						autoClose: 1500,
+						position: "bottom-center",
+						type: "success",
+					});
+				},
+				(error) => {
+					toast.error(error, {
+						position: toast.POSITION.TOP_LEFT,
+					});
+				}
+			);
+
 		window.location.reload(false);
 	}
 	cancel() {
@@ -79,6 +91,7 @@ class Formulaire extends Component {
 		this.state.idUT = idUT;
 		const { idReq } = this.props;
 		this.state.idReq = idReq;
+		let baseClasses = "SortableItem rfb-item";
 		return (
 			<div>
 				{this.state.Forms.map((F) => (

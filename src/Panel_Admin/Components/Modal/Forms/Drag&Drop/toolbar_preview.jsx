@@ -4,12 +4,12 @@ import HTML5Backend from "react-dnd-html5-backend";
 import Preview from "./preview";
 import Toolbar from "./toolbar";
 import ReactFormGenerator from "./form";
-import store from "../../Forms/stores/store";
+import store from "../stores/store";
 import Modals from "./index.js";
 import * as variables from "./variables";
 import { Row, Col, Card, CardBody } from "reactstrap";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
-import base_url from "../../../../../../src/service/base_url";
+import base_url from "../../../../../service/base_url";
 import axios from "axios";
 
 class ReactFormBuilder extends React.Component {
@@ -28,7 +28,6 @@ class ReactFormBuilder extends React.Component {
 		axios.get(url).then((res) => {
 			const Forms = res.data;
 			this.setState({ Forms });
-			this.setState({ data: this.state.Forms[0].data[0] });
 		});
 	}
 

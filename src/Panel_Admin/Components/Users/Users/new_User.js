@@ -18,7 +18,6 @@ export default class New_user extends Component {
 		this.state = {
 			groups: [],
 			options: [],
-			name: "",
 			Roles: [],
 			selectedOptionGP: null,
 			selectedOptionR: null,
@@ -36,8 +35,8 @@ export default class New_user extends Component {
 			let options = [];
 			for (let i = 0; i < n; i++) {
 				let gp = {
-					value: this.state.groups[i].name_GP,
-					label: this.state.groups[i].name_GP,
+					value: this.state.groups[i].name,
+					label: this.state.groups[i].name,
 				};
 				options.push(gp);
 			}
@@ -74,7 +73,7 @@ export default class New_user extends Component {
 			for (let i = 0; i < n1; i++) {
 				for (let j = 0; j < n_Gp; j++) {
 					if (
-						this.state.groups[j].name_GP == this.state.selectedOptionGP[i].label
+						this.state.groups[j].name == this.state.selectedOptionGP[i].label
 					) {
 						this.state.tabGp.push(this.state.groups[j]);
 					}
@@ -97,8 +96,7 @@ export default class New_user extends Component {
 			method: "post",
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify({
-				name: this.state.name,
-				login: this.state.login,
+				username: this.state.username,
 				email: this.state.email,
 				password: this.state.password,
 				roles: this.state.tabR,
@@ -117,38 +115,19 @@ export default class New_user extends Component {
 			<div>
 				<FormGroup row>
 					<Col sm={1}></Col>
-					<Col sm={5}>
-						<AvForm>
-							<AvGroup>
-								<Label for="example">Name</Label>
-								<AvInput
-									name="name"
-									required
-									type="text"
-									required
-									onChange={(ev) =>
-										this.setState({
-											name: ev.target.value,
-										})
-									}
-								/>
 
-								<AvFeedback>This is an error!</AvFeedback>
-							</AvGroup>
-						</AvForm>
-					</Col>
 					<Col sm={5}>
 						<AvForm>
 							<AvGroup>
-								<Label for="example">Login</Label>
+								<Label for="example">Username</Label>
 								<AvInput
-									name="Login"
+									name="Username"
 									required
 									type="text"
 									required
 									onChange={(ev) =>
 										this.setState({
-											login: ev.target.value,
+											username: ev.target.value,
 										})
 									}
 								/>
@@ -234,16 +213,14 @@ export default class New_user extends Component {
 					<Button
 						outline
 						className="btn-wide mb-2 mr-2"
-						size="lg"
-						color="warning"
+						color="danger"
 						onClick={this.refreshPage}
 					>
 						Cancel
 					</Button>
 					<Button
 						className="btn-wide mb-2 mr-2"
-						size="lg"
-						color="warning"
+						color="success"
 						onClick={this.saveUser}
 					>
 						Save

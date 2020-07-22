@@ -1,7 +1,7 @@
 module.exports = {
 	/*Workflow*/
 
-	//get_all_workflow
+	//all_WF
 	all_WF: function () {
 		return "/api/workflow/findAllWF";
 	},
@@ -116,7 +116,10 @@ module.exports = {
 	deleteUser: function () {
 		return "/api/user/deleteUser";
 	},
-
+	//getCurrentUsergetALLRequest
+	getCurrentUser: function () {
+		return "/api/user/getCurrentUser";
+	},
 	/*Requests*/
 
 	//addRequest

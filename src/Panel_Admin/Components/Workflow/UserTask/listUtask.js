@@ -15,14 +15,18 @@ export default class ListUT extends React.Component {
 		this.state = {
 			userTasks: [],
 			tabGp: [],
+			task: "",
 			selectedOptionGP: null,
 			options: [],
 			optionsUT: [],
+			optionsGp: [],
 			options: [],
 			optionsWF: [],
+			click: false,
 		};
 		this.affectGroup = this.affectGroup.bind(this);
 		this.getUT = this.getUT.bind(this);
+		this.getGp = this.getGp.bind(this);
 	}
 
 	componentDidMount() {
@@ -48,8 +52,8 @@ export default class ListUT extends React.Component {
 			let options = [];
 			for (let i = 0; i < n; i++) {
 				let gp = {
-					value: this.state.groups[i].name_GP,
-					label: this.state.groups[i].name_GP,
+					value: this.state.groups[i].name,
+					label: this.state.groups[i].name,
 				};
 				options.push(gp);
 			}
@@ -81,6 +85,26 @@ export default class ListUT extends React.Component {
 		});
 	};
 
+	getGp = () => {
+		const n = this.state.userTasks.length;
+		for (let i = 0; i < n; i++) {
+			if (this.state.userTasks[i].id == this.state.idUT) {
+				this.state.task = this.state.userTasks[i];
+			}
+		}
+		let gps = this.state.task.group;
+		const n1 = gps.length;
+		let optionsGp = [];
+		for (let i = 0; i < n1; i++) {
+			let gp = {
+				value: gps[i].name,
+				label: gps[i].name,
+			};
+			optionsGp.push(gp);
+		}
+		this.setState({ optionsGp });
+	};
+
 	handleChangeUT = (selectedOption) => {
 		this.setState({ selectedOption });
 		this.setState({ idUT: selectedOption.value });
@@ -89,6 +113,13 @@ export default class ListUT extends React.Component {
 	handleChangeGp = (selectedOptionGP) => {
 		this.setState({ selectedOptionGP });
 	};
+	componentWillUpdate() {
+		let url = base_url.all_UserTasks() + "/" + this.state.idWF;
+		axios.get(url).then((res) => {
+			const userTasks = res.data;
+			this.setState({ userTasks });
+		});
+	}
 
 	affectGroup = (event) => {
 		event.preventDefault();
@@ -98,7 +129,7 @@ export default class ListUT extends React.Component {
 			for (let i = 0; i < n1; i++) {
 				for (let j = 0; j < n_Gp; j++) {
 					if (
-						this.state.groups[j].name_GP == this.state.selectedOptionGP[i].label
+						this.state.groups[j].name == this.state.selectedOptionGP[i].label
 					) {
 						this.state.tabGp.push(this.state.groups[j]);
 					}
@@ -107,35 +138,34 @@ export default class ListUT extends React.Component {
 		}
 
 		if (this.state.idUT != "" && this.state.tabGp.length != 0) {
-			fetch(base_url.update_UT(), {
-				method: "post",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({
+			axios
+				.post(base_url.update_UT(), {
 					id: this.state.idUT,
 					group: this.state.tabGp,
-				}),
-			});
-			this.state.tabGp = [];
+				})
+				.then(
+					(response) => {
+						this.toastId = toast(response.data + " " + this.state.name, {
+							transition: Bounce,
+							closeButton: true,
+							autoClose: 1500,
+							position: "bottom-center",
+							type: "success",
+						});
+					},
+					(error) => {
+						toast.error(error, {
+							position: toast.POSITION.TOP_LEFT,
+						});
+					}
+				);
 
-			this.toastId = toast(
-				"Candidate group successfully added to usertask " +
-					"'" +
-					this.state.name +
-					"'",
-				{
-					transition: Bounce,
-					closeButton: true,
-					autoClose: 5000,
-					position: "bottom-center",
-					type: "success",
-				}
-			);
+			this.state.tabGp = [];
 		} else {
 			toast.error("Error ! some information was unavailable", {
 				position: toast.POSITION.TOP_LEFT,
 			});
 		}
-		//	window.location.reload(false);
 	};
 
 	render() {
@@ -167,9 +197,7 @@ export default class ListUT extends React.Component {
 										<Col lg="2">
 											<Button
 												className="btn-wide mb-1 mr-1"
-												size="lg"
 												outline
-												color="warning"
 												onClick={this.getUT}
 											>
 												<FontAwesomeIcon icon={faAngleRight} size="1x" />
@@ -189,7 +217,7 @@ export default class ListUT extends React.Component {
 											/>
 										</Col>
 
-										<Col lg="2">
+										<Col lg="1">
 											<Label>List of groups</Label>
 										</Col>
 										<Col lg="3">
@@ -204,42 +232,43 @@ export default class ListUT extends React.Component {
 										<Col lg="2">
 											<Button
 												className="btn-wide mb-1 mr-1"
-												size="lg"
 												outline
-												color="warning"
 												onClick={this.affectGroup}
 											>
 												Affect group
 											</Button>
 										</Col>
 									</Row>
+									<br />
 									<div className="mbg-3 h-auto pl-0 pr-0 bg-transparent no-border card-header">
 										<div className="card-header-title fsize-2 text-capitalize font-weight-normal"></div>
 									</div>
-									<Table>
-										<tbody>
-											<tr>
-												<th></th>
-												<th>Usertask</th>
-												<th>Group</th>
-											</tr>
-											{this.state.userTasks.map((usertask) => (
+									{this.state.userTasks.length != 0 && (
+										<Table>
+											<tbody>
 												<tr>
-													<td></td>
-													{usertask.group.length != 0 && (
-														<td>{usertask.name}</td>
-													)}
-													{usertask.group.length != 0 && (
-														<td>
-															{usertask.group.map((gp) => (
-																<div>{gp.name_GP}</div>
-															))}
-														</td>
-													)}
+													<th></th>
+													<th>Usertask</th>
+													<th>Group</th>
 												</tr>
-											))}
-										</tbody>
-									</Table>
+												{this.state.userTasks.map((usertask) => (
+													<tr>
+														<td></td>
+														{usertask.group.length != 0 && (
+															<td>{usertask.name}</td>
+														)}
+														{usertask.group.length != 0 && (
+															<td>
+																{usertask.group.map((gp) => (
+																	<div>{gp.name}</div>
+																))}
+															</td>
+														)}
+													</tr>
+												))}
+											</tbody>
+										</Table>
+									)}
 								</CardBody>
 							</Card>
 						</Col>

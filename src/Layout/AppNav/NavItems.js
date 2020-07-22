@@ -40,6 +40,19 @@ export const Security = [
 		to: "#/components/roles",
 	},
 ];
+export const Requests = [
+	{
+		icon: "pe-7s-back-2",
+		label: "Historical process",
+		content: [
+			{
+				icon: "pe-7s-back-2",
+				label: "Historical process",
+				to: "#/components/historic_admin",
+			},
+		],
+	},
+];
 
 export const Forms = [
 	{
